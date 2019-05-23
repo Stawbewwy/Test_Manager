@@ -1,22 +1,30 @@
-class Program_settings
+//#include <stdlib.h>
+//#include <stdio.h>
+#ifndef _PROGRAM_SETTINGS_H
+#define _PROGRAM_SETTINGS_H
+#include <string>
+
+
+class Program_Settings
 {
     private:
         std::string program_name;
         std::string input_sequence;
         int num_lines_down;
-        std::string chars_to_skip;
     
     public:
-        Program_Settings(string, string, int, string) : program_name(string), input_sequence(string), num_lines_down(int), chars_to_skip(string);
-        Program_Settings();
+        Program_Settings(std::string new_program, std::string new_input_seq, int new_num_lines) : program_name(new_program), input_sequence(new_input_seq), num_lines_down(new_num_lines){};
+        ~Program_Settings(){};
+        //Program_Settings();
 
-        void set_program_name();
-        void set_input_sequence();
-        void set_num_lines_down();
-        void set_chars_to_skip();
+        void set_program_name(std::string new_program){ program_name = new_program; };
+        void set_input_sequence(std::string new_input_seq) {input_sequence = new_input_seq; };
+        void set_num_lines_down(int new_num_lines) {num_lines_down = new_num_lines; };
 
-        void get_program_name();
-        void get_input_sequence();
-        void get_num_lines_down();
-        void get_chars_to_skip();
-}
+        std::string get_program_name(){ return program_name; };
+        std::string get_input_sequence(){ return input_sequence; };
+        int get_num_lines_down(){ return num_lines_down; };
+
+        void print_settings();
+};
+#endif
