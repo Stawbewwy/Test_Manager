@@ -3,6 +3,7 @@
 #include <iostream>
 #include "../include/main_menu.h"
 #include "../include/add_new_program.h"
+#include "../include/update_existing_program.h"
 
 void main_menu()
 {
@@ -32,6 +33,7 @@ void main_menu()
 
             case 2:
             {
+                update_existing_program();
                 break;
             }
 
