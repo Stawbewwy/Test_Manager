@@ -31,32 +31,45 @@ void edit_record_file(std::string file)
 
     new_record.write_record(file);
 }
-void change_directory(std::string &curr_dir)
+void change_directory()
 {
     std::cout << "Please enter the new desired directory: ";
-     getline(std::cin, curr_dir);
+    
+    std::string temp;
+    getline(std::cin, temp);
+    
+    std::experimental::filesystem::current_path(temp);
+    // curr_dir.append("/");
+    // curr_dir += temp;
+    
 
      return;
 }
 
-void list_curr_dir(std::string path)
+void list_curr_dir()
 {
     std::cout << std::endl;
-    for (const auto & entry : std::experimental::filesystem::directory_iterator(path))
+    for (const auto & entry : std::experimental::filesystem::directory_iterator( std::experimental::filesystem::current_path() ) )
         std::cout << entry.path() << std::endl;
-
+    std::cout << std::endl;
     return;
+}
+
+void generate_program(std::string pwd)
+{
+
 }
 
 void update_existing_program()
 {
-    std::string curr_dir = ".";
     int option;
+
     while(1)
-    {
+    {   
         std::cout << "\n==== Update Existing Program ====" << std::endl;
-        std::cout << "Current Directory: " << curr_dir << std::endl
-                  << "1 -- Select File to Edit" << std::endl
+        std::cout << "\nCurrent Directory: " << std::experimental::filesystem::current_path() << std::endl << std::endl
+
+                  << "1 -- Select Program to Edit" << std::endl
                   << "2 -- List all Files in Current Directory" << std::endl
                   << "3 -- Change Current Directory" << std::endl
                   << "4 -- Return to Main Menu" << std::endl
@@ -64,35 +77,38 @@ void update_existing_program()
         
         std::cin >> option;
         
-        //Flush cin buffer after previous operation.
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         switch(option)
         {
             case 1:
-            {
-                std::string temp = curr_dir;
-                temp.append("/");
-                edit_record_file( temp += get_valid_file() );
+            {       
+                edit_record_file( get_valid_file() );
                 break;
             }
 
             case 2:
             {
-                list_curr_dir(curr_dir);
+                list_curr_dir();
                 break;
             }
 
             case 3:
             {
-                change_directory(curr_dir);
+                change_directory();
                 break;
             }
 
             case 4:
             {
+                //generate_program();
                 break;
+            }
+
+            case 5:
+            {
+                return;
             }
 
             default:
