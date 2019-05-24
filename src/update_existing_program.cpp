@@ -5,9 +5,8 @@
 #include <limits>
 #include <experimental/filesystem>
 
-std::string curr_dir;
 
-void change_directory()
+void change_directory(std::string &curr_dir)
 {
     std::cout << "Please enter the new desired directory: ";
      getline(std::cin, curr_dir);
@@ -15,9 +14,9 @@ void change_directory()
      return;
 }
 
-void list_curr_dir()
+void list_curr_dir(std::string path)
 {
-    std::string path = "./records";
+    std::cout << std::endl;
     for (const auto & entry : std::experimental::filesystem::directory_iterator(path))
         std::cout << entry.path() << std::endl;
 
@@ -26,7 +25,7 @@ void list_curr_dir()
 
 void update_existing_program()
 {
-    curr_dir = ".";
+    std::string curr_dir = ".";
     int option;
     while(1)
     {
@@ -53,13 +52,13 @@ void update_existing_program()
 
             case 2:
             {
-                list_curr_dir();
+                list_curr_dir(curr_dir);
                 break;
             }
 
             case 3:
             {
-                change_directory();
+                change_directory(curr_dir);
                 break;
             }
 
@@ -70,7 +69,7 @@ void update_existing_program()
 
             default:
             {
-                std::cout << "Error! Please enter a valid choice.";
+                std::cout << "\nError! Please enter a valid choice.\n";
                 break;
             }
         }
