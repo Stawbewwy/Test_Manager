@@ -9,7 +9,7 @@ INC_DIR = ./include
 OBJ_DIR = ./object
 
 CFLAGS   +=  -Wall -Werror
-CPPFLAGS += -std=c++11
+CPPFLAGS += -std=c++17 -lstdc++fs
 
 INCLUDE += -I $(INC_DIR)
 
@@ -19,6 +19,7 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/edit_program.o \
 		$(OBJ_DIR)/Program_Settings.o \
 		$(OBJ_DIR)/delete_program.o \
+		$(OBJ_DIR)/update_existing_program.o
 
 .PHONY: all clean $(PROG_NAME) compile
 
