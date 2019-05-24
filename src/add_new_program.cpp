@@ -1,5 +1,4 @@
 #include "../include/add_new_program.h"
-#include "../include/Program_Settings.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -7,14 +6,12 @@
 #include <limits>
 
 
-Program_Settings get_program_info()
+void add_new_program()
 {
     std::string program_name;
     std::string input_sequence;
     int num_lines_down;
-
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::string chars_to_skip;
 
     std::cout << "Please enter the name of the program you wish to test: ";
     getline(std::cin, program_name);
@@ -25,20 +22,12 @@ Program_Settings get_program_info()
     
     std::cin >> num_lines_down;
 
-    std::cin.clear();
+      std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     
+    std::cout << "Please specify any characters that are encounted before the result, ON THE SAME LINE of the result (each followed by a comma, e.g, +, ,!): ";
+    getline(std::cin, chars_to_skip);
+
     std::cout << "Attempting to find target program..." << std::endl;
-
-    return ( Program_Settings(program_name, input_sequence, num_lines_down) );
-}
-
-void add_new_program()
-{
-
-  Program_Settings program_info = get_program_info();
-
-  program_info.print_settings();
-
-  /**From here, we need to write this into our records*/   
+    
 }

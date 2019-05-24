@@ -17,18 +17,15 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/main_menu.o \
 		$(OBJ_DIR)/add_new_program.o \
 		$(OBJ_DIR)/edit_program.o \
+		$(OBJ_DIR)/Program_Settings.o \
 		$(OBJ_DIR)/delete_program.o \
-		$(OBJ DIR)/Program_Settings.o 
 
 .PHONY: all clean $(PROG_NAME) compile
 
 all: $(PROG_NAME)
 
-compile: 
-	$(CC) -c $(CFLAG) $(SRC_LIST) -o $(OBJECT_LIST)
-
 $(PROG_NAME): $(OBJECT_LIST)
-	$(CC) $(OBJECT_LIST) -o $(BIN_DIR)/$(PROG_NAME) $(CPPFLAGS) 
+	$(CC) $(OBJECT_LIST) -o $(PROG_NAME) $(CPPFLAGS) 
 
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
@@ -36,3 +33,5 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 clean:
 	rm -f $(BIN_DIR)/$(PROG_NAME) $(BUILD_DIR)/*.o
+
+print-%  : ; @echo $* = $($*)

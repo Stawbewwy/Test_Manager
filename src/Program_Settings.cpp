@@ -1,5 +1,6 @@
 #include "../include/Program_Settings.h"
-#include <stdlib>
+#include <stdlib.h>
+#include <iostream>
 
 void Program_Settings::print_settings()
 {
