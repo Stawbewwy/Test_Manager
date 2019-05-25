@@ -15,7 +15,7 @@ INCLUDE += -I $(INC_DIR)
 
 OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/main_menu.o \
-		$(OBJ_DIR)/add_new_program.o \
+		$(OBJ_DIR)/add_new_tester.o \
 		$(OBJ_DIR)/edit_program.o \
 		$(OBJ_DIR)/Program_Settings.o \
 		$(OBJ_DIR)/delete_program.o \

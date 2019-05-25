@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "../include/main_menu.h"
-#include "../include/add_new_program.h"
+#include "../include/add_new_tester.h"
 #include "../include/update_existing_program.h"
 #include <experimental/filesystem>
 
@@ -30,7 +30,7 @@ void main_menu()
         {
             case 1:
             {
-                add_new_program();
+                add_new_tester();
 
                 break;
             }
