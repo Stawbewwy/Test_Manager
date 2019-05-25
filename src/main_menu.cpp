@@ -4,13 +4,17 @@
 #include "../include/main_menu.h"
 #include "../include/add_new_program.h"
 #include "../include/update_existing_program.h"
+#include <experimental/filesystem>
 
 void main_menu()
 {
     while(1)
     {
         std::cout << "==== Main Menu ====" << std::endl;
-        std::cout << "1 -- Add new program" << std::endl;
+        
+        std::cout << "\nCurrent Directory: " << std::experimental::filesystem::current_path() << std::endl << std::endl;
+
+        std::cout << "1 -- Create New Tester" << std::endl;
         std::cout << "2 -- Update existing program" << std::endl;
         std::cout << "3 -- Delete existing program" << std::endl;
         std::cout << "4 -- Exit" << std::endl;

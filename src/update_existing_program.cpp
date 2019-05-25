@@ -39,10 +39,6 @@ void change_directory()
     getline(std::cin, temp);
     
     std::experimental::filesystem::current_path(temp);
-    // curr_dir.append("/");
-    // curr_dir += temp;
-    
-
      return;
 }
 
@@ -51,6 +47,7 @@ void list_curr_dir()
     std::cout << std::endl;
     for (const auto & entry : std::experimental::filesystem::directory_iterator( std::experimental::filesystem::current_path() ) )
         std::cout << entry.path() << std::endl;
+    
     std::cout << std::endl;
     return;
 }
@@ -72,7 +69,8 @@ void update_existing_program()
                   << "1 -- Select Program to Edit" << std::endl
                   << "2 -- List all Files in Current Directory" << std::endl
                   << "3 -- Change Current Directory" << std::endl
-                  << "4 -- Return to Main Menu" << std::endl
+                  << "4 -- Generate New Tester" << std::endl
+                  << "5 -- Return to Main Menu" << std::endl
                   << "\nPlease enter an option: ";
         
         std::cin >> option;
