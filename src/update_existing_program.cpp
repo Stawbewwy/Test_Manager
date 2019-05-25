@@ -52,11 +52,6 @@ void list_curr_dir()
     return;
 }
 
-void generate_program(std::string pwd)
-{
-
-}
-
 void update_existing_program()
 {
     int option;
@@ -69,8 +64,7 @@ void update_existing_program()
                   << "1 -- Select Tester to Edit" << std::endl
                   << "2 -- List all Files in Current Directory" << std::endl
                   << "3 -- Change Current Directory" << std::endl
-                  << "4 -- Generate New Tester Program" << std::endl
-                  << "5 -- Return to Main Menu" << std::endl
+                  << "4 -- Return to Main Menu" << std::endl
                   << "\nPlease enter an option: ";
         
         std::cin >> option;
@@ -97,14 +91,8 @@ void update_existing_program()
                 change_directory();
                 break;
             }
-
+           
             case 4:
-            {
-                //generate_program();
-                break;
-            }
-
-            case 5:
             {
                 return;
             }

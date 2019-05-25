@@ -17,7 +17,8 @@ void main_menu()
         std::cout << "1 -- Create New Tester" << std::endl;
         std::cout << "2 -- Update Existing Tester" << std::endl;
         std::cout << "3 -- Delete Existing Tester" << std::endl;
-        std::cout << "4 -- Exit" << std::endl;
+        std::cout << "4 -- Generate New Tester Program" << std::endl;
+        std::cout << "5 -- Exit" << std::endl;
 
         std::cout << std::endl <<"Please enter an option: ";
 
@@ -46,7 +47,15 @@ void main_menu()
                 break;
             }
 
-            case 4:
+             case 4:
+            {
+
+                void generate_program(std::string pwd);
+
+                break;
+            }
+
+            case 5:
             {
                 std::cout <<"Thank you for using Test Manager! Have a good one!" << std::endl;
                 exit(0);
