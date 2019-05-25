@@ -15,8 +15,8 @@ void main_menu()
         std::cout << "\nCurrent Directory: " << std::experimental::filesystem::current_path() << std::endl << std::endl;
 
         std::cout << "1 -- Create New Tester" << std::endl;
-        std::cout << "2 -- Update existing program" << std::endl;
-        std::cout << "3 -- Delete existing program" << std::endl;
+        std::cout << "2 -- Update Existing Tester" << std::endl;
+        std::cout << "3 -- Delete Existing Tester" << std::endl;
         std::cout << "4 -- Exit" << std::endl;
 
         std::cout << std::endl <<"Please enter an option: ";

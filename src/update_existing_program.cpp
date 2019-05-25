@@ -66,10 +66,10 @@ void update_existing_program()
         std::cout << "\n==== Update Existing Program ====" << std::endl;
         std::cout << "\nCurrent Directory: " << std::experimental::filesystem::current_path() << std::endl << std::endl
 
-                  << "1 -- Select Program to Edit" << std::endl
+                  << "1 -- Select Tester to Edit" << std::endl
                   << "2 -- List all Files in Current Directory" << std::endl
                   << "3 -- Change Current Directory" << std::endl
-                  << "4 -- Generate New Tester" << std::endl
+                  << "4 -- Generate New Tester Program" << std::endl
                   << "5 -- Return to Main Menu" << std::endl
                   << "\nPlease enter an option: ";
         
