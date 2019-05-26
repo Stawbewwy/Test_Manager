@@ -1,5 +1,4 @@
 CC          = g++
-LD          = g++ 
 CFLAG       = -Wall
 PROG_NAME   = Test_Manager.x
 
