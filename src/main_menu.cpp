@@ -4,6 +4,7 @@
 #include "../include/main_menu.h"
 #include "../include/add_new_tester.h"
 #include "../include/update_existing_program.h"
+#include "../include/generate_program.h"
 #include <experimental/filesystem>
 
 void main_menu()
@@ -50,7 +51,7 @@ void main_menu()
              case 4:
             {
 
-                void generate_program(std::string pwd);
+                 generate_program();
 
                 break;
             }
