@@ -38,10 +38,13 @@ void create_source_code(std::string tester_name)
         //Child
         if(curr_test == 0)
         {
-
+            //change stdin to the correct input
+            //change stdout to a new file
+            //execvp
         }
 
         //otherwise, we're parent and we process data.
+        //wait for child, read the file, compare the results
         
     }
 
