@@ -33,9 +33,35 @@ void create_input_buffer(std::ofstream &destination, std::ifstream &source, std:
     return;
 }
 
-/** This function actually runs the test for a desired input to check */
+//the actual execution of a tester.
+void exec_test(std::string tester_name, std::string program_name)
+{
+    int input_fd = open((tester_name + ".buffer").c_str(), O_RDONLY);
+    int output_fd = open( (tester_name + ".output").c_str(), O_RDONLY );
+
+    //change stdin to the correct input
+    dup2(input_fd,STDIN_FILENO);
+    close(input_fd);
+
+    //change stdout to a new file
+    dup2(output_fd, STDOUT_FILENO);
+    close(output_fd);
+
+    char* argv[2];
+
+    argv[0] = (char*) program_name.c_str();
+    argv[1] = NULL;
+    
+    if ( execvp(argv[0], argv) < 0)
+    {
+        std::cout << "Error executing desired program!" <<std::endl;
+        exit(-1);
+    }
+}
+
+/** Function that will run the test and display results.*/
 /** @tester_name; the name of the tester program. */
-void run_test(std::string tester_name, std::string program_name)
+void run_test(std::string tester_name, std::string program_name, int num_lines_down,std::string input, std::string ans)
 {
     //We will be doing the fork + exec combo to test each input.
     //int test_fd = open((tester_name + ".buffer").c_str(), O_RDWR);
@@ -45,28 +71,38 @@ void run_test(std::string tester_name, std::string program_name)
     //Child is the test. Rather than piping the results, we'll just leave a note in a file.
     if(curr_test == 0)
     {
-        int input_fd = open((tester_name + ".buffer").c_str(), O_RDONLY);
-        int output_fd = open( (tester_name + ".output").c_str(), O_RDONLY );
-
-        //change stdin to the correct input
-        dup2(input_fd,STDIN_FILENO);
-        close(input_fd);
-
-        //change stdout to a new file
-        dup2(output_fd, STDOUT_FILENO);
-        close(output_fd);
-
-        char* argv[2];
-
-        argv[0] = (char*) program_name.c_str();
-        argv[1] = NULL;
-        
-        if ( execvp(argv[0], argv) < 0)
-        {
-            std::cout << "Error executing desired program!" <<std::endl;
-            exit(-1);
-        }
+       exec_test(tester_name, program_name);
     }
+
+    else
+    {
+        std::ifstream output_file( (tester_name) + ".output" );
+        std::string result;
+
+        //Push file offset to the output of the test
+        for(int n = 0; n < num_lines_down; n++)
+        {
+            getline(output_file, result);
+        }
+
+        //extract the output
+        getline(output_file, result);
+
+        std::cout << "\n\nInput: " << input << "\t Correct Answer: " << ans << "\t";
+        
+        if(result == ans)
+        {
+            std::cout << "pass!";
+        }
+
+        else
+        {
+            std::cout << "\nFailed. Got: " << result << endl;
+        }
+        
+    }
+
+
 }
 
 /** @tester_name; the name of the tester program. */
@@ -100,12 +136,14 @@ void create_source_code(std::string tester_name)
 
         //If for some reason this file already exists, we need to remove it to reset the contents.
         remove( (tester_name + ".buffer").c_str() );
+        remove( (tester_name + ".output").c_str() );
+
         std::ofstream tester_buffer((tester_name + ".buffer"));
         
         //Copy the inputs to get to the input to test
         create_input_buffer(file_name, tester_buffer, input_file);
 
-        run_test(tester_name);
+        run_test(tester_name, program_name, num_lines_down, input, ans);
     }
 }
 
