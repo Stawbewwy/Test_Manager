@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <fcntl.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <limits>
 
@@ -16,18 +17,20 @@ void create_input_buffer(std::string tester_name, std::ofstream &destination, st
     std::string temp;
 
     //load the file buffer with the screen inputs
-    while(source.good())
+    while( source.good() )
     {
+        
         getline(source, temp);
-
+        
         destination << temp << std::endl;
     }
 
     //load the file buffer with the tests
     std::ifstream tester_fstream( (tester_name + ".tests") );
 
-    while(tester_fstream >> temp)
+    while( tester_fstream.good() )
     {
+        getline(tester_fstream, temp);
         destination << temp << std::endl;
     }
 
@@ -41,7 +44,7 @@ void create_input_buffer(std::string tester_name, std::ofstream &destination, st
 void exec_test(std::string tester_name, std::string program_name)
 {
     int input_fd = open((tester_name + ".buffer").c_str(), O_RDONLY);
-    int output_fd = open( (tester_name + ".output").c_str(), O_RDONLY );
+    int output_fd = open( (tester_name + ".output").c_str(), O_RDWR | O_CREAT, S_IRWXU );
 
     //change stdin to the correct input
     dup2(input_fd,STDIN_FILENO);
@@ -54,11 +57,13 @@ void exec_test(std::string tester_name, std::string program_name)
     char* argv[2];
 
     argv[0] = (char*) program_name.c_str();
+    //argv[0] = (char*)"./addition_calculator.x";
     argv[1] = NULL;
-    
+
     if ( execvp(argv[0], argv) < 0)
     {
-        std::cout << "Error executing desired program!" <<std::endl;
+        std::cerr << program_name.c_str();
+        std::cerr << "Error executing desired program!" <<std::endl;
         exit(-1);
     }
 }
@@ -75,11 +80,13 @@ void run_test(std::string tester_name, std::string program_name, int num_lines_d
     //Child is the test. Rather than piping the results, we'll just leave a note in a file.
     if(curr_test == 0)
     {
-       exec_test(tester_name, program_name);
+        
+        exec_test(tester_name, program_name);
     }
 
     else
     {
+        waitpid(curr_test, NULL, 0);
         std::ifstream output_file( (tester_name) + ".output" );
         std::string result;
 
@@ -109,6 +116,14 @@ void run_test(std::string tester_name, std::string program_name, int num_lines_d
 
 }
 
+void get_inp_out (std::string line, std::string &input, std::string &output)
+{
+    //everything until first tab is the input.
+    input = line.substr(0, line.find_first_of('\t') );
+
+    output = line.substr( line.find_first_of('\t') +1 );
+}
+
 /** @tester_name; the name of the tester program. */
 void create_source_code(std::string tester_name)
 {
@@ -130,22 +145,34 @@ void create_source_code(std::string tester_name)
     std::ifstream input_file( ( tester_name + ".input") );
     std::ifstream tests_file( (tester_name + ".tests"));
 
-    while ( input_file >> input >> ans  )
+    //while ( tests_file >> input >> ans  )
+    while ( tests_file.good() )
     {
+        std::string temp;
 
-        //Need to reset offset to beginning of file each iteration.        
-        input_file.seekg(0);
+        getline(tests_file, temp);
 
-        //If for some reason this file already exists, we need to remove it to reset the contents.
-        remove( (tester_name + ".buffer").c_str() );
-        remove( (tester_name + ".output").c_str() );
+        //last input is going to be a blank line. This is a false line.
+        if(temp != "")
+        {
+            get_inp_out(temp, input, ans);
 
-        std::ofstream tester_buffer((tester_name + ".buffer"));
-        
-        //Copy the inputs to get to the input to test
-        create_input_buffer(program_name, tester_buffer, input_file);
 
-        run_test(tester_name, program_name, num_lines_down, input, ans);
+            //Need to reset offset to beginning of file each iteration.        
+            input_file.seekg(0);
+
+            //If for some reason this file already exists, we need to remove it to reset the contents.
+            remove( (tester_name + ".buffer").c_str() );
+            remove( (tester_name + ".output").c_str() );
+
+            std::ofstream tester_buffer((tester_name + ".buffer"));
+            
+            //Copy the inputs to get to the input to test
+            create_input_buffer(tester_name, tester_buffer, input_file);
+
+            run_test(tester_name, program_name, num_lines_down, input, ans);    
+        }
+
     }
 }
 
