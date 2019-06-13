@@ -3,6 +3,7 @@
 #include <fstream>
 #include <fcntl.h>
 #include <unistd.h>
+#include <limits>
 
 /** 
     @tester_name: the name of desired tester.
@@ -111,8 +112,6 @@ void run_test(std::string tester_name, std::string program_name, int num_lines_d
 /** @tester_name; the name of the tester program. */
 void create_source_code(std::string tester_name)
 {
-    
-    
     char curr_inp;
 
     int num_lines_down;
@@ -153,6 +152,8 @@ void create_source_code(std::string tester_name)
 void generate_program()
 {
     std::string tester_name;
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "Enter the name of the tester you want to generate: ";
     getline(std::cin, tester_name);
 
