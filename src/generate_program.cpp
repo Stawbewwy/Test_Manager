@@ -4,6 +4,25 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+/** 
+    @destination: fstream to have another file written to. Written by reference.
+    @source:    fstream to be copied.
+
+ */
+void copy_data_file(std::ofstream &destination, std::ifstream &source)
+{
+    std::string temp;
+
+    while(source.good())
+    {
+        getline(source, temp);
+
+        destination << temp << std::endl;
+    }
+
+    return;
+}
+
 void create_source_code(std::string tester_name)
 {
     std::string source;
@@ -11,12 +30,13 @@ void create_source_code(std::string tester_name)
     char curr_inp;
 
     int num_lines_down;
-    char input, ans;
+    std::string input, ans;
     
     /** READ THE META DETA FILE*/
 
+    std::ifstream input_file( ( tester_name + ".input") );
     std::ifstream meta_file((tester_name + ".meta"));
-    std::ifstream input_file( ( tester_name + ".input"));
+    std::ifstream tests_file( (tester_name + ".tests"));
     
     
     // Pull the file name of the desired tester.
@@ -29,13 +49,23 @@ void create_source_code(std::string tester_name)
 
     while ( input_file >> input >> ans  )
     {
-        remove( (tester_name + ".test").c_str() );
+
+        //Need to reset offset to beginning of file each iteration.        
+        input_file.seekg(0);
+
+        //If for some reason this file already exists, we need to remove it to reset the contents.
+        remove( (tester_name + ".buffer").c_str() );
+        std::ofstream tester_fstream((tester_name + ".buffer"));
         
-        int test_fd = open((tester_name + ".test").c_str(), O_RDWR);
+        //Copy the inputs to get to the input to test
+        copy_data_file(tester_fstream, input_file);
+
+        //We will be doing the fork + exec combo to test each input.
+        int test_fd = open((tester_name + ".buffer").c_str(), O_RDWR);
 
         int curr_test = fork();
-
-        //Child
+        
+        //Child is the test
         if(curr_test == 0)
         {
             //change stdin to the correct input
