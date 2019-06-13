@@ -35,9 +35,8 @@ void create_input_buffer(std::ofstream &destination, std::ifstream &source, std:
 
 /** This function actually runs the test for a desired input to check */
 /** @tester_name; the name of the tester program. */
-void run_test(std::string tester_name)
+void run_test(std::string tester_name, std::string program_name)
 {
-
     //We will be doing the fork + exec combo to test each input.
     //int test_fd = open((tester_name + ".buffer").c_str(), O_RDWR);
 
@@ -56,20 +55,24 @@ void run_test(std::string tester_name)
         //change stdout to a new file
         dup2(output_fd, STDOUT_FILENO);
         close(output_fd);
-        
-        
-        //execvp
-        
-    }
 
-    //otherwise, we're parent and we process data.
-    //wait for child, read the file, compare the results
+        char* argv[2];
+
+        argv[0] = (char*) program_name.c_str();
+        argv[1] = NULL;
+        
+        if ( execvp(argv[0], argv) < 0)
+        {
+            std::cout << "Error executing desired program!" <<std::endl;
+            exit(-1);
+        }
+    }
 }
 
 /** @tester_name; the name of the tester program. */
 void create_source_code(std::string tester_name)
 {
-    std::string source;
+    
     
     char curr_inp;
 
@@ -77,19 +80,17 @@ void create_source_code(std::string tester_name)
     std::string input, ans;
     
     /** READ THE META DETA FILE*/
+    std::ifstream meta_file((tester_name + ".meta"));    
+    std::string program_name;
 
-    std::ifstream input_file( ( tester_name + ".input") );
-    std::ifstream meta_file((tester_name + ".meta"));
-    std::ifstream tests_file( (tester_name + ".tests"));
-    
-    
     // Pull the file name of the desired tester.
     getline(meta_file,source);
-
-    //Pull the number of lines down out of meta file.
+    //pull num lines down out of meta file.
     meta_file >> num_lines_down;
 
-    int stdin_backup = dup(STDIN_FILENO);
+
+    std::ifstream input_file( ( tester_name + ".input") );
+    std::ifstream tests_file( (tester_name + ".tests"));
 
     while ( input_file >> input >> ans  )
     {
@@ -99,10 +100,10 @@ void create_source_code(std::string tester_name)
 
         //If for some reason this file already exists, we need to remove it to reset the contents.
         remove( (tester_name + ".buffer").c_str() );
-        std::ofstream tester_fstream((tester_name + ".buffer"));
+        std::ofstream tester_buffer((tester_name + ".buffer"));
         
         //Copy the inputs to get to the input to test
-        create_input_buffer(file_name, tester_fstream, input_file);
+        create_input_buffer(file_name, tester_buffer, input_file);
 
         run_test(tester_name);
     }
