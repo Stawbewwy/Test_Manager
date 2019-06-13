@@ -5,11 +5,12 @@
 #include <unistd.h>
 
 /** 
+    @tester_name: the name of desired tester.
     @destination: fstream to have another file written to. Written by reference.
     @source:    fstream to be copied.
 
  */
-void create_input_buffer(std::ofstream &destination, std::ifstream &source, std::string tester_name)
+void create_input_buffer(std::string tester_name, std::ofstream &destination, std::ifstream &source)
 {
     std::string temp;
 
@@ -26,13 +27,15 @@ void create_input_buffer(std::ofstream &destination, std::ifstream &source, std:
 
     while(tester_fstream >> temp)
     {
-        destination << temp << endl;
+        destination << temp << std::endl;
     }
 
 
     return;
 }
 
+//@tester_name: the name of desired tester.
+//@program_name: the name of the program being tested.
 //the actual execution of a tester.
 void exec_test(std::string tester_name, std::string program_name)
 {
@@ -97,7 +100,7 @@ void run_test(std::string tester_name, std::string program_name, int num_lines_d
 
         else
         {
-            std::cout << "\nFailed. Got: " << result << endl;
+            std::cout << "\nFailed. Got: " << result << std::endl;
         }
         
     }
@@ -120,7 +123,7 @@ void create_source_code(std::string tester_name)
     std::string program_name;
 
     // Pull the file name of the desired tester.
-    getline(meta_file,source);
+    getline(meta_file,program_name);
     //pull num lines down out of meta file.
     meta_file >> num_lines_down;
 
@@ -141,7 +144,7 @@ void create_source_code(std::string tester_name)
         std::ofstream tester_buffer((tester_name + ".buffer"));
         
         //Copy the inputs to get to the input to test
-        create_input_buffer(file_name, tester_buffer, input_file);
+        create_input_buffer(program_name, tester_buffer, input_file);
 
         run_test(tester_name, program_name, num_lines_down, input, ans);
     }
