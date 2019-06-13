@@ -67,7 +67,15 @@ void exec_test(std::string tester_name, std::string program_name)
         exit(-1);
     }
 }
+void print_pass()
+{
+    std::cout << "\033[1;32m\t\tPass!\033[0m\n";
+}
 
+void print_failed()
+{
+    std::cout << "\033[1;31m\t\tFailed! \033[0m ";
+}
 /** Function that will run the test and display results.*/
 /** @tester_name; the name of the tester program. */
 void run_test(std::string tester_name, std::string program_name, int num_lines_down,std::string input, std::string ans)
@@ -99,16 +107,18 @@ void run_test(std::string tester_name, std::string program_name, int num_lines_d
         //extract the output
         getline(output_file, result);
 
-        std::cout << "\n\nInput: " << input << "\t Correct Answer: " << ans << "\t";
+        std::cout << "\n\nInput: " << input << "\t Expected Answer: " << ans << std::endl;
+        std::cout << "\nOutput: " << result;
         
         if(result == ans)
         {
-            std::cout << "pass!";
+             print_pass();
         }
 
         else
         {
-            std::cout << "\nFailed. Got: " << result << std::endl;
+            print_failed();
+            //std::cout << result << std::endl;
         }
         
     }
