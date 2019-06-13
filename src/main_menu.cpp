@@ -11,7 +11,7 @@ void main_menu()
 {
     while(1)
     {
-        std::cout << "==== Main Menu ====" << std::endl;
+        std::cout << "\n\n==== Main Menu ====" << std::endl;
         
         std::cout << "\nCurrent Directory: " << std::experimental::filesystem::current_path() << std::endl << std::endl;
 
