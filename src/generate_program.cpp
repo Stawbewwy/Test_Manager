@@ -30,11 +30,11 @@ void create_input_buffer(std::string tester_name, std::ofstream &destination, st
     //load the file buffer with the tests
     std::ifstream tester_fstream( (tester_name + ".tests") );
 
-    while( tester_fstream.good() )
-    {
+    //while( tester_fstream.good() )
+    //{
         getline(tester_fstream, temp);
         destination << temp << std::endl;
-    }
+    //}
 
 
     return;
@@ -153,7 +153,7 @@ void create_source_code(std::string tester_name)
     getline(meta_file,program_name);
     //pull num lines down out of meta file.
     meta_file >> num_lines_down;
-    meta_file >> num_ans_lines;
+    //meta_file >> num_ans_lines;
 
 
     std::ifstream input_file( ( tester_name + ".input") );
@@ -165,12 +165,17 @@ void create_source_code(std::string tester_name)
         
         std::string temp;
 
-        getline(tests_file, temp);
+        //first line always input.
+        getline(tests_file, input);
 
-        //last input is going to be a blank line. This is a false line.
-        if(temp != "")
+        //push to first line of output.
+        
+        //build output string for current test.
+        while(temp != "~x~")
         {
-            get_inp_out(temp, input, ans);
+            getline(tests_file, temp);
+            output += (temp + "\n")
+        }
 
 
             //Need to reset offset to beginning of file each iteration.        
