@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-Class Tester_Info
+class Tester_Info
 {
     private: 
     int num_lines_down, num_ans_lines;
@@ -13,4 +13,6 @@ Class Tester_Info
     Tester_Info(int inp_num_lines_down, int inp_num_ans_lines, std::string inp_input, std::string inp_ans) 
             :   num_lines_down(inp_num_lines_down), num_ans_lines(num_ans_lines), input(inp_input), ans(inp_ans){};
 
-} 
+};
+
+#endif
