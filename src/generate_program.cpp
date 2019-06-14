@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <limits>
+#include "Tester_Info.h"
 
 /** 
     @tester_name: the name of desired tester.
@@ -12,6 +13,7 @@
     @source:    fstream to be copied.
 
  */
+
 void create_input_buffer(std::string tester_name, std::ofstream &destination, std::ifstream &source)
 {
     std::string temp;
@@ -78,7 +80,7 @@ void print_failed()
 }
 /** Function that will run the test and display results.*/
 /** @tester_name; the name of the tester program. */
-void run_test(std::string tester_name, std::string program_name, int num_lines_down,std::string input, std::string ans)
+void run_test(Tester_Info tester_settings)
 {
     //We will be doing the fork + exec combo to test each input.
     //int test_fd = open((tester_name + ".buffer").c_str(), O_RDWR);
@@ -89,17 +91,17 @@ void run_test(std::string tester_name, std::string program_name, int num_lines_d
     if(curr_test == 0)
     {
         
-        exec_test(tester_name, program_name);
+        exec_test(tester_settings.get_tester_name(), tester_settings.get_program_name());
     }
 
     else
     {
         waitpid(curr_test, NULL, 0);
-        std::ifstream output_file( (tester_name) + ".output" );
+        std::ifstream output_file( (tester_settings.get_tester_name()) + ".output" );
         std::string result;
 
         //Push file offset to the output of the test
-        for(int n = 0; n < num_lines_down; n++)
+        for(int n = 0; n < tester_settings.get_num_lines_down(); n++)
         {
             getline(output_file, result);
         }
@@ -107,10 +109,10 @@ void run_test(std::string tester_name, std::string program_name, int num_lines_d
         //extract the output
         getline(output_file, result);
 
-        std::cout << "\n\nInput: " << input << "\t Expected Answer: " << ans << std::endl;
+        std::cout << "\n\nInput: " << tester_settings.get_input() << "\t Expected Answer: " << tester_settings.get_ans() << std::endl;
         std::cout << "\nOutput: " << result;
         
-        if(result == ans)
+        if(result == tester_settings.get_ans())
         {
              print_pass();
         }
@@ -137,9 +139,9 @@ void get_inp_out (std::string line, std::string &input, std::string &output)
 /** @tester_name; the name of the tester program. */
 void create_source_code(std::string tester_name)
 {
-    char curr_inp;
+    //char curr_inp;
 
-    int num_lines_down;
+    int num_lines_down, num_ans_lines;
     std::string input, ans;
     
     /** READ THE META DETA FILE*/
@@ -150,6 +152,7 @@ void create_source_code(std::string tester_name)
     getline(meta_file,program_name);
     //pull num lines down out of meta file.
     meta_file >> num_lines_down;
+    meta_file >> num_ans_lines;
 
 
     std::ifstream input_file( ( tester_name + ".input") );
@@ -158,6 +161,7 @@ void create_source_code(std::string tester_name)
     //while ( tests_file >> input >> ans  )
     while ( tests_file.good() )
     {
+        
         std::string temp;
 
         getline(tests_file, temp);
@@ -180,7 +184,8 @@ void create_source_code(std::string tester_name)
             //Copy the inputs to get to the input to test
             create_input_buffer(tester_name, tester_buffer, input_file);
 
-            run_test(tester_name, program_name, num_lines_down, input, ans);    
+            Tester_Info tester_settings(num_lines_down, num_ans_lines, program_name ,tester_name, input, ans);
+            run_test(tester_settings);    
         }
 
     }
