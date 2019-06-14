@@ -20,7 +20,8 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/delete_program.o \
 		$(OBJ_DIR)/update_existing_program.o \
 		$(OBJ_DIR)/generate_program.o \
-		$(OBJ_DIR)/Record.o
+		$(OBJ_DIR)/Record.o \
+		$(OBJ_DIR)/Tester_Info.o \
 
 .PHONY: all clean $(PROG_NAME) compile
 
