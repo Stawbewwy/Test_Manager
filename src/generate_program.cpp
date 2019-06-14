@@ -58,6 +58,7 @@ void exec_test(std::string tester_name, std::string program_name)
 
     char* argv[2];
 
+    //std::cout << "GOOD EVENING: " << program_name;
     argv[0] = (char*) program_name.c_str();
     //argv[0] = (char*)"./addition_calculator.x";
     argv[1] = NULL;
@@ -91,7 +92,7 @@ void run_test(Tester_Info tester_settings)
     if(curr_test == 0)
     {
         
-        exec_test(tester_settings.get_tester_name(), tester_settings.get_program_name());
+        exec_test( tester_settings.get_tester_name(), tester_settings.get_program_name() );
     }
 
     else
