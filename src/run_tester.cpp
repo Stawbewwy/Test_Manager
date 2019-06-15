@@ -52,8 +52,8 @@ void print_failed()
 //the actual execution of a tester.
 void exec_test(std::string tester_name, std::string program_name)
 {
-    int input_fd = open((tester_name + ".buffer").c_str(), O_RDONLY);
-    int output_fd = open( (tester_name + ".output").c_str(), O_RDWR | O_CREAT, S_IRWXU );
+    int input_fd = open( ( tester_name+ "/" + tester_name + ".buffer").c_str(), O_RDONLY);
+    int output_fd = open( (tester_name+ "/" + tester_name + ".output").c_str(), O_RDWR | O_CREAT, S_IRWXU );
 
     //change stdin to the correct input
     dup2(input_fd,STDIN_FILENO);
@@ -90,11 +90,10 @@ void run_test(Tester_Info tester_settings)
         
         exec_test( tester_settings.get_tester_name(), tester_settings.get_program_name() );
     }
-
     else
     {
         waitpid(curr_test, NULL, 0);
-        std::ifstream output_file( (tester_settings.get_tester_name()) + ".output" );
+        std::ifstream output_file( tester_settings.get_tester_name() + "/" + tester_settings.get_tester_name() + ".output" );
         std::string result;
         
         //string buffer
@@ -152,7 +151,7 @@ void create_source_code(std::string tester_name)
     std::string input, ans;
     
     /** READ THE META DETA FILE*/
-    std::ifstream meta_file((tester_name + ".meta"));    
+    std::ifstream meta_file(tester_name + "/" + tester_name + ".meta");    
     std::string program_name;
 
     // Pull the file name of the desired tester.
@@ -162,8 +161,8 @@ void create_source_code(std::string tester_name)
 
 
 
-    std::ifstream input_file( ( tester_name + ".input") );
-    std::ifstream tests_file( (tester_name + ".tests"));
+    std::ifstream input_file( tester_name + "/" + tester_name + ".input" );
+    std::ifstream tests_file( tester_name + "/" + tester_name + ".tests");
 
     //while ( tests_file >> input >> ans  )
     while ( tests_file.good() )
@@ -204,12 +203,15 @@ void create_source_code(std::string tester_name)
                 remove( (tester_name + ".buffer").c_str() );
                 remove( (tester_name + ".output").c_str() );
 
-                std::ofstream tester_buffer((tester_name + ".buffer"));
+                std::ofstream tester_buffer(tester_name + "/" + tester_name + ".buffer");
                 
                 //Copy the inputs to get to the input to test
                 create_input_buffer(input, tester_buffer, input_file);
+                
+                
 
                 Tester_Info tester_settings(num_lines_down, num_ans_lines, program_name ,tester_name, input, ans);
+                
                 run_test(tester_settings);    
             }
     }

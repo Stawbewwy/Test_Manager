@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <experimental/filesystem>
+
 
 static std::string parse_input(std::string input)
 {
@@ -29,7 +31,18 @@ void Program_Settings::print_settings()
 
 
     //Note that we append the / ourselves. The user must not input it.
-    std::string record_location = output_directory + "/" + output_name;
+    std::string record_location = output_directory + "/" + output_name + "/" + output_name;
+
+    //store cwd
+    //std::string curr_dir = std::experimental::filesystem::current_path();
+    //chdir
+    //std::experimental::filesystem::current_path(temp);
+    //mkdir
+
+     std::experimental::filesystem::create_directory( output_directory + "/" + output_name );
+     std::experimental::filesystem::permissions(output_directory + "/" + output_name, std::experimental::filesystem::perms::owner_all);
+
+
     std::string input_file = record_location + ".input";
     std::string meta_file = record_location + ".meta";
 
