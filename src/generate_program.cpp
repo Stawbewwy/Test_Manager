@@ -111,15 +111,29 @@ void run_test(Tester_Info tester_settings)
         waitpid(curr_test, NULL, 0);
         std::ifstream output_file( (tester_settings.get_tester_name()) + ".output" );
         std::string result;
+        
+        //string buffer
+        std::string temp;
 
         //Push file offset to the output of the test
         for(int n = 0; n < tester_settings.get_num_lines_down(); n++)
         {
-            getline(output_file, result);
+            getline(output_file, temp);
         }
 
+        
+        std::cerr << std::endl << "num_ans_lines: " << tester_settings.get_num_ans_lines() << std::endl;
         //extract the output
-        getline(output_file, result);
+        for(int n = 0; n < tester_settings.get_num_ans_lines(); n++)
+        {   
+            getline(output_file, temp);
+            std::cerr << "temp: " << temp << std::endl;
+
+            result += temp + "\n";
+        }
+
+        //remove the "\n" @ end
+        result.erase( result.length()-1, 1);
 
         std::cout << "\n\nInput: " << tester_settings.get_input() << "\t Expected Answer: " << tester_settings.get_ans() << std::endl;
         std::cout << "\nOutput: " << result;
@@ -153,7 +167,8 @@ void create_source_code(std::string tester_name)
 {
     //char curr_inp;
 
-    int num_lines_down, num_ans_lines;
+    int num_lines_down;
+    int num_ans_lines = 0;
     std::string input, ans;
     
     /** READ THE META DETA FILE*/
@@ -184,12 +199,17 @@ void create_source_code(std::string tester_name)
         //build output string for current test.
         while(temp != "~x~")
         {
+            std::cout << "AHAHAHA" << std::endl;
             getline(tests_file, temp);
+            num_ans_lines++;
+            std::cout << num_ans_lines << std::endl;
             ans += (temp + "\n");
         }
 
         //erase the appended "\n~x~";    
         ans.erase(ans.length() - 1 - 4,5);
+        num_ans_lines--;
+        std::cout << "i close both locks " << num_ans_lines << std::endl;
 
 
             //Need to reset offset to beginning of file each iteration.        
