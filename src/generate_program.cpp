@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <limits>
+#include <algorithm>
 #include "Tester_Info.h"
 
 /** 
@@ -14,7 +15,16 @@
 
  */
 
-void create_input_buffer(std::string tester_name, std::ofstream &destination, std::ifstream &source)
+/**
+    @input: string to be tokenized to proper std input. Breaks every , into a blank.
+*/
+std::string tokenize_input(std::string input)
+{
+    std::replace( input.begin(), input.end(), ',', ' ');
+    return input;
+}
+
+void create_input_buffer(std::string input, std::ofstream &destination, std::ifstream &source)
 {
     std::string temp;
 
@@ -28,18 +38,27 @@ void create_input_buffer(std::string tester_name, std::ofstream &destination, st
     }
 
     //load the file buffer with the tests
-    std::ifstream tester_fstream( (tester_name + ".tests") );
+  //  std::ifstream tester_fstream( (tester_name + ".tests") );
 
-    while( tester_fstream.good() )
-    {
-        getline(tester_fstream, temp);
-        destination << temp << std::endl;
-    }
+    //while( tester_fstream.good() )
+    //{
+        // getline(tester_fstream, temp);
+        destination << tokenize_input(input) << std::endl;
+    //}
 
 
     return;
 }
 
+void print_pass()
+{
+    std::cout << "\033[1;32m\t\tPass!\033[0m\n";
+}
+
+void print_failed()
+{
+    std::cout << "\033[1;31m\t\tFailed! \033[0m ";
+}
 //@tester_name: the name of desired tester.
 //@program_name: the name of the program being tested.
 //the actual execution of a tester.
@@ -70,15 +89,7 @@ void exec_test(std::string tester_name, std::string program_name)
         exit(-1);
     }
 }
-void print_pass()
-{
-    std::cout << "\033[1;32m\t\tPass!\033[0m\n";
-}
 
-void print_failed()
-{
-    std::cout << "\033[1;31m\t\tFailed! \033[0m ";
-}
 /** Function that will run the test and display results.*/
 /** @tester_name; the name of the tester program. */
 void run_test(Tester_Info tester_settings)
@@ -153,7 +164,7 @@ void create_source_code(std::string tester_name)
     getline(meta_file,program_name);
     //pull num lines down out of meta file.
     meta_file >> num_lines_down;
-    meta_file >> num_ans_lines;
+    //meta_file >> num_ans_lines;
 
 
     std::ifstream input_file( ( tester_name + ".input") );
@@ -165,12 +176,20 @@ void create_source_code(std::string tester_name)
         
         std::string temp;
 
-        getline(tests_file, temp);
+        //first line always input.
+        getline(tests_file, input);
 
-        //last input is going to be a blank line. This is a false line.
-        if(temp != "")
+        //push to first line of output.
+        
+        //build output string for current test.
+        while(temp != "~x~")
         {
-            get_inp_out(temp, input, ans);
+            getline(tests_file, temp);
+            ans += (temp + "\n");
+        }
+
+        //erase the appended "\n~x~";    
+        ans.erase(ans.length() - 1 - 4,5);
 
 
             //Need to reset offset to beginning of file each iteration.        
@@ -183,14 +202,15 @@ void create_source_code(std::string tester_name)
             std::ofstream tester_buffer((tester_name + ".buffer"));
             
             //Copy the inputs to get to the input to test
-            create_input_buffer(tester_name, tester_buffer, input_file);
+            create_input_buffer(input, tester_buffer, input_file);
 
             Tester_Info tester_settings(num_lines_down, num_ans_lines, program_name ,tester_name, input, ans);
+            std::cerr << "The cops shot: " << tester_settings.get_input() << std::endl;
             run_test(tester_settings);    
         }
 
-    }
 }
+
 
 void generate_program()
 {

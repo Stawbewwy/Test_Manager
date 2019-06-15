@@ -20,12 +20,20 @@ void edit_record_file(std::string file)
 {
     std::string new_input;
     std::string new_output;
+    std::string temp = "x";
 
     std::cout << "Please enter the next input to test: ";
     getline(std::cin, new_input);
 
-    std::cout << "Please enter the correct output for that input: ";
-    getline(std::cin, new_output);
+    std::cout << "Please enter the correct output for that input(enter nothing to stop): ";
+
+    //build output sequence
+    while(temp != "")
+    {
+        getline(std::cin, temp);
+        new_output += ("\n" + temp);
+    }
+    
 
     Record new_record(new_input, new_output);
 
