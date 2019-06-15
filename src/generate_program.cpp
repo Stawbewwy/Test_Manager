@@ -8,12 +8,6 @@
 #include <algorithm>
 #include "Tester_Info.h"
 
-/** 
-    @tester_name: the name of desired tester.
-    @destination: fstream to have another file written to. Written by reference.
-    @source:    fstream to be copied.
-
- */
 
 /**
     @input: string to be tokenized to proper std input. Breaks every , into a blank.
@@ -38,13 +32,7 @@ void create_input_buffer(std::string input, std::ofstream &destination, std::ifs
     }
 
     //load the file buffer with the tests
-  //  std::ifstream tester_fstream( (tester_name + ".tests") );
-
-    //while( tester_fstream.good() )
-    //{
-        // getline(tester_fstream, temp);
-        destination << tokenize_input(input) << std::endl;
-    //}
+    destination << tokenize_input(input) << std::endl;
 
 
     return;
@@ -77,9 +65,7 @@ void exec_test(std::string tester_name, std::string program_name)
 
     char* argv[2];
 
-    //std::cout << "GOOD EVENING: " << program_name;
     argv[0] = (char*) program_name.c_str();
-    //argv[0] = (char*)"./addition_calculator.x";
     argv[1] = NULL;
 
     if ( execvp(argv[0], argv) < 0)
@@ -95,7 +81,6 @@ void exec_test(std::string tester_name, std::string program_name)
 void run_test(Tester_Info tester_settings)
 {
     //We will be doing the fork + exec combo to test each input.
-    //int test_fd = open((tester_name + ".buffer").c_str(), O_RDWR);
 
     int curr_test = fork();
         
@@ -121,14 +106,10 @@ void run_test(Tester_Info tester_settings)
             getline(output_file, temp);
         }
 
-        
-        std::cerr << std::endl << "num_ans_lines: " << tester_settings.get_num_ans_lines() << std::endl;
         //extract the output
         for(int n = 0; n < tester_settings.get_num_ans_lines(); n++)
         {   
             getline(output_file, temp);
-            std::cerr << "temp: " << temp << std::endl;
-
             result += temp + "\n";
         }
 
@@ -146,7 +127,6 @@ void run_test(Tester_Info tester_settings)
         else
         {
             print_failed();
-            //std::cout << result << std::endl;
         }
         
     }
@@ -179,7 +159,7 @@ void create_source_code(std::string tester_name)
     getline(meta_file,program_name);
     //pull num lines down out of meta file.
     meta_file >> num_lines_down;
-    //meta_file >> num_ans_lines;
+
 
 
     std::ifstream input_file( ( tester_name + ".input") );
@@ -199,17 +179,14 @@ void create_source_code(std::string tester_name)
         //build output string for current test.
         while(temp != "~x~")
         {
-            std::cout << "AHAHAHA" << std::endl;
             getline(tests_file, temp);
             num_ans_lines++;
-            std::cout << num_ans_lines << std::endl;
             ans += (temp + "\n");
         }
 
         //erase the appended "\n~x~";    
         ans.erase(ans.length() - 1 - 4,5);
         num_ans_lines--;
-        std::cout << "i close both locks " << num_ans_lines << std::endl;
 
 
             //Need to reset offset to beginning of file each iteration.        
@@ -225,7 +202,6 @@ void create_source_code(std::string tester_name)
             create_input_buffer(input, tester_buffer, input_file);
 
             Tester_Info tester_settings(num_lines_down, num_ans_lines, program_name ,tester_name, input, ans);
-            std::cerr << "The cops shot: " << tester_settings.get_input() << std::endl;
             run_test(tester_settings);    
         }
 
