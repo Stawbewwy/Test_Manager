@@ -1,17 +1,9 @@
 # Test_Manager
 
-*Test Manager* is a bit of an involved tester. It's designed to be adaptable to various types of programs. You can use this program to make a new program to test YOUR program. The way it works is this:
+*Test Manager* is a bit of an involved tester. It's designed to be adaptable to various types of deterministic (i.e, exactly one output per input) programs. It's designed to allow you to test your programs most likely *without* needing to change the way your program prints it's output. This application attempts to figure out (with your help) where it can test the desired inputs, and where it can see the output of your program to see if it's what it should be. The way it works is this:
 
 1. You find an application you want to test.
-2. With *Test Manager*, you select to create a new tester.
-3. Suppose you create tester `x`. You'll get two files, `x.meta` and `x.input`. The `.meta` file contains the name of the application you are testing, as well as how many lines down in the output we can retrieve the answer. The `.input` file contains the needed input to get to the *exact* input you are testing. For example, if you had a switch and a couple of options before getting to where you needed to test your program, we would have the input to go through that switch and the other options.
-4. Once you have a created tester, you can begin updating it; adding a specific input/output test or removing them. You can of course delete it as well.
-5. Once you are ready to test your program, create the actual tester for your program. *Test Manager* will read through your stored inputs and outputs and generate a tester for you to use. Make sure when running the generated tested program, it's found in the same directory.
-
-```mermaid
-graph LR
-A[Create Tester x] --> B[x.meta]
-A --> C[x.input]
-B --> D{Rhombus}
-C --> D
-```
+2. With *Test Manager*, you select to create a new tester. You select which program you want to test, which directory to store it in, what to name the tester, the sequence of inputs to get to the specific input *you* want to test, and how many lines down on the program we can begin to find the output (where you need to get quite involved). 
+3. Suppose you create tester `x`.You'll get a new folder named `x`, and inside of it will contain all data of the tester. Upon creatioin, you'll have a `.meta` file, which is used to store the name of the program you are testing, as well as the number of lines down on the output we are trying to verify is correct. Also is a `.input` file, and here contains the input to get to the exact input we are testing (e.g., we need to get through a switch and some other general input statements until we get to the one we are trying to test).
+4. From here, you can add tests to the tester. After adding records, you'll get a `.tests` file.
+5. Once you have actual tests, you can begin testing your program! Just select to run a tester, select which one, and bam! *Test_Manager* will begin running your program and testing the outputs of your desired input.
