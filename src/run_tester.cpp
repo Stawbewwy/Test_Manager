@@ -1,4 +1,4 @@
-#include "../include/generate_program.h"
+#include "../include/run_tester.h"
 #include <iostream>
 #include <fstream>
 #include <fcntl.h>
@@ -208,7 +208,7 @@ void create_source_code(std::string tester_name)
 }
 
 
-void generate_program()
+void run_tester()
 {
     std::string tester_name;
 

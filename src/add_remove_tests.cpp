@@ -1,6 +1,6 @@
 // Credit to Shreevardhan @Stackoverflow, https://stackoverflow.com/questions/612097/how-can-i-get-the-list-of-files-in-a-directory-using-c-or-c 
 
-#include "../include/update_existing_program.h"
+#include "../include/add_remove_tests.h"
 #include "../include/Record.h"
 #include <iostream>
 #include <limits>
@@ -60,7 +60,7 @@ void list_curr_dir()
     return;
 }
 
-void update_existing_program()
+void add_remove_tests()
 {
     int option;
 

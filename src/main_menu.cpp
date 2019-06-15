@@ -3,8 +3,8 @@
 #include <iostream>
 #include "../include/main_menu.h"
 #include "../include/add_new_tester.h"
-#include "../include/update_existing_program.h"
-#include "../include/generate_program.h"
+#include "../include/add_remove_tests.h"
+#include "../include/run_tester.h"
 #include <experimental/filesystem>
 
 void main_menu()
@@ -16,9 +16,9 @@ void main_menu()
         std::cout << "\nCurrent Directory: " << std::experimental::filesystem::current_path() << std::endl << std::endl;
 
         std::cout << "1 -- Create New Tester" << std::endl;
-        std::cout << "2 -- Update Existing Tester" << std::endl;
+        std::cout << "2 -- Add/Remove Tests to Tester" << std::endl;
         std::cout << "3 -- Delete Existing Tester" << std::endl;
-        std::cout << "4 -- Generate New Tester Program" << std::endl;
+        std::cout << "4 -- Run Tester" << std::endl;
         std::cout << "5 -- Exit" << std::endl;
 
         std::cout << std::endl <<"Please enter an option: ";
@@ -39,7 +39,7 @@ void main_menu()
 
             case 2:
             {
-                update_existing_program();
+                add_remove_tests();
                 break;
             }
 
@@ -51,7 +51,7 @@ void main_menu()
              case 4:
             {
 
-                 generate_program();
+                 run_tester();
 
                 break;
             }

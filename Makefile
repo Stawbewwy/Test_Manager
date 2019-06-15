@@ -18,8 +18,8 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/edit_program.o \
 		$(OBJ_DIR)/Program_Settings.o \
 		$(OBJ_DIR)/delete_program.o \
-		$(OBJ_DIR)/update_existing_program.o \
-		$(OBJ_DIR)/generate_program.o \
+		$(OBJ_DIR)/add_remove_tests.o \
+		$(OBJ_DIR)/run_tester.o \
 		$(OBJ_DIR)/Record.o \
 		$(OBJ_DIR)/Tester_Info.o \
 
