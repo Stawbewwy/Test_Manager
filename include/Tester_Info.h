@@ -12,7 +12,7 @@ class Tester_Info
     public:
     Tester_Info(int inp_num_lines_down, int inp_num_ans_lines, std::string inp_program_name , std::string inp_tester_name ,
                 std::string inp_input, std::string inp_ans) 
-            :   num_lines_down(inp_num_lines_down), num_ans_lines(num_ans_lines), program_name(inp_program_name), tester_name(inp_tester_name) 
+            :   num_lines_down(inp_num_lines_down), num_ans_lines(inp_num_ans_lines), program_name(inp_program_name), tester_name(inp_tester_name) 
                 ,input(inp_input), ans(inp_ans){};
             
     int get_num_lines_down(){ return num_lines_down; };
