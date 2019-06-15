@@ -8,7 +8,7 @@ void Record::write_record(std::string filename)
     std::ofstream file;
 
     file.open( (filename + ".tests"), std::ios::out | std::ios::app );
-    file << input << "\t" << output << std::endl <<"~x~"; 
+    file << input << "\t" << output <<"~x~"; 
 
     file.close();
 
