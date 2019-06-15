@@ -40,12 +40,12 @@ void create_input_buffer(std::string input, std::ofstream &destination, std::ifs
 
 void print_pass()
 {
-    std::cout << "\033[1;32m\t\tPass!\033[0m\n";
+    std::cout << "\033[1;32m\t\tPassed!\033[0m\n";
 }
 
 void print_failed()
 {
-    std::cout << "\033[1;31m\t\tFailed! \033[0m ";
+    std::cout << "\033[1;31m\t\tFailed! \033[0m \n";
 }
 //@tester_name: the name of desired tester.
 //@program_name: the name of the program being tested.
@@ -148,7 +148,7 @@ void create_source_code(std::string tester_name)
     //char curr_inp;
 
     int num_lines_down;
-    int num_ans_lines = 0;
+    int num_ans_lines;
     std::string input, ans;
     
     /** READ THE META DETA FILE*/
@@ -171,40 +171,48 @@ void create_source_code(std::string tester_name)
         
         std::string temp;
 
+        ans = "";
+        num_ans_lines = 0;
+
         //first line always input.
         getline(tests_file, input);
 
-        //push to first line of output.
-        
-        //build output string for current test.
-        while(temp != "~x~")
-        {
-            getline(tests_file, temp);
-            num_ans_lines++;
-            ans += (temp + "\n");
-        }
+        //last read will pull a blank line.
+        if(input != ""){
+            //build output string for current test.
+            while(temp != "~x~")
+            {
+                getline(tests_file, temp);
+                num_ans_lines++;
+                ans += (temp + "\n");
 
-        //erase the appended "\n~x~";    
-        ans.erase(ans.length() - 1 - 4,5);
-        num_ans_lines--;
+                //std::cerr << "VeryConcernedShad\n";
+            }
+
+            //erase the appended "\n~x~";    
+            ans.erase(ans.length() - 1 - 4,5);
+            num_ans_lines--;
+
+            //push file through blank line.
+            // getline(tests_file, temp);
 
 
-            //Need to reset offset to beginning of file each iteration.        
-            input_file.seekg(0);
+                //Need to reset offset to beginning of file each iteration.        
+                input_file.seekg(0);
 
-            //If for some reason this file already exists, we need to remove it to reset the contents.
-            remove( (tester_name + ".buffer").c_str() );
-            remove( (tester_name + ".output").c_str() );
+                //If for some reason this file already exists, we need to remove it to reset the contents.
+                remove( (tester_name + ".buffer").c_str() );
+                remove( (tester_name + ".output").c_str() );
 
-            std::ofstream tester_buffer((tester_name + ".buffer"));
-            
-            //Copy the inputs to get to the input to test
-            create_input_buffer(input, tester_buffer, input_file);
+                std::ofstream tester_buffer((tester_name + ".buffer"));
+                
+                //Copy the inputs to get to the input to test
+                create_input_buffer(input, tester_buffer, input_file);
 
-            Tester_Info tester_settings(num_lines_down, num_ans_lines, program_name ,tester_name, input, ans);
-            run_test(tester_settings);    
-        }
-
+                Tester_Info tester_settings(num_lines_down, num_ans_lines, program_name ,tester_name, input, ans);
+                run_test(tester_settings);    
+            }
+    }
 }
 
 
