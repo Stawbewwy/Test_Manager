@@ -22,6 +22,7 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/run_tester.o \
 		$(OBJ_DIR)/Record.o \
 		$(OBJ_DIR)/Tester_Info.o \
+		$(OBJ_DIR)/get_input.o
 
 .PHONY: all clean $(PROG_NAME) compile
 
