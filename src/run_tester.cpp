@@ -8,32 +8,62 @@
 #include <algorithm>
 #include "Tester_Info.h"
 
-
 /**
     @input: string to be tokenized to proper std input. Breaks every , into a blank.
 */
-std::string tokenize_input(std::string input)
+std::string parse_input(std::ifstream &tests_file)
 {
-    std::replace( input.begin(), input.end(), ',', ' ');
-    return input;
+    std::string temp = "x";
+
+    std::string test;
+
+
+    while(temp != "~z~" && temp != "")
+    {
+        getline(tests_file, temp);
+
+        test += temp + "\n";
+    }
+
+
+    if(temp == "")
+    {
+        return test;
+    }
+
+    return test.erase( ( (int)test.length() ) - 1 - 4, 5);
+
 }
 
-void create_input_buffer(std::string input, std::ofstream &destination, std::ifstream &source)
+int file_get_num_lines(std::string file_name)
+{
+    int counter = 0;
+    std::string temp;
+
+    std::ifstream file(file_name);
+
+    while (file.good())
+    {
+        getline(file, temp);
+        counter++;
+    }
+
+    return counter - 1;
+}
+
+void create_input_buffer(std::string tester_name, std::ofstream &destination, std::ifstream &source, std::string test_input)
 {
     std::string temp;
 
-    //load the file buffer with the screen inputs
-    while( source.good() )
+    //lines -1 to get rid of a null line
+    for(int n = 0 ; n < file_get_num_lines(tester_name + "/" + tester_name + ".input") - 1 ; n++ )
     {
-        
         getline(source, temp);
-        
         destination << temp << std::endl;
     }
 
     //load the file buffer with the tests
-    destination << tokenize_input(input) << std::endl;
-
+    destination << test_input << std::endl;
 
     return;
 }
@@ -47,6 +77,7 @@ void print_failed()
 {
     std::cout << "\033[1;31m\t\tFailed! \033[0m \n";
 }
+
 //@tester_name: the name of desired tester.
 //@program_name: the name of the program being tested.
 //the actual execution of a tester.
@@ -59,8 +90,9 @@ void exec_test(std::string tester_name, std::string program_name)
     dup2(input_fd,STDIN_FILENO);
     close(input_fd);
 
-    //change stdout to a new file
+    //change stdout and stderr to a new file
     dup2(output_fd, STDOUT_FILENO);
+    dup2(output_fd, STDERR_FILENO);
     close(output_fd);
 
     char* argv[2];
@@ -114,10 +146,9 @@ void run_test(Tester_Info tester_settings)
 
         //remove the "\n" @ end
         result.erase( result.length()-1, 1);
-
-        std::cout << "\n\nInput: " << tester_settings.get_input() << "\t Expected Answer: " << tester_settings.get_ans() << std::endl;
-        std::cout << "\nOutput: " << result;
         
+        std::cout << "\n==== Test #" << tester_settings.get_test_num() << " ====";
+
         if(result == tester_settings.get_ans())
         {
              print_pass();
@@ -127,28 +158,23 @@ void run_test(Tester_Info tester_settings)
         {
             print_failed();
         }
+
+        std::cout << "\nInput: \n" << tester_settings.get_input() << "\n\nExpected Answer: \n" << tester_settings.get_ans() << std::endl;
+        std::cout << "\nOutput: \n" << result << std::endl;
+
+       
         
     }
 
 
 }
 
-void get_inp_out (std::string line, std::string &input, std::string &output)
-{
-    //everything until first tab is the input.
-    input = line.substr(0, line.find_first_of('\t') );
-
-    output = line.substr( line.find_first_of('\t') +1 );
-}
-
 /** @tester_name; the name of the tester program. */
 void create_source_code(std::string tester_name)
 {
-    //char curr_inp;
-
     int num_lines_down;
     int num_ans_lines;
-    std::string input, ans;
+    std::string test_input = "x", ans;
     
     /** READ THE META DETA FILE*/
     std::ifstream meta_file(tester_name + "/" + tester_name + ".meta");    
@@ -164,57 +190,60 @@ void create_source_code(std::string tester_name)
     std::ifstream input_file( tester_name + "/" + tester_name + ".input" );
     std::ifstream tests_file( tester_name + "/" + tester_name + ".tests");
 
-    //while ( tests_file >> input >> ans  )
+    int test_num = 0;
+
     while ( tests_file.good() )
     {
-        
+        test_num++;
+
         std::string temp;
 
         ans = "";
         num_ans_lines = 0;
 
-        //first line always input.
-        getline(tests_file, input);
+        //pull out the input we are going to be testing.
+        test_input = parse_input(tests_file);
+
 
         //last read will pull a blank line.
-        if(input != ""){
+        if( tests_file.good() ){
             //build output string for current test.
             while(temp != "~x~")
             {
                 getline(tests_file, temp);
                 num_ans_lines++;
                 ans += (temp + "\n");
-
-                //std::cerr << "VeryConcernedShad\n";
             }
 
             //erase the appended "\n~x~";    
             ans.erase(ans.length() - 1 - 4,5);
             num_ans_lines--;
 
-            //push file through blank line.
-            // getline(tests_file, temp);
 
+            //Need to reset offset to beginning of file each iteration.        
+            input_file.seekg(0);
 
-                //Need to reset offset to beginning of file each iteration.        
-                input_file.seekg(0);
+            //If file already exists, we need to remove it to reset the contents.
+            remove( (tester_name + "/" +tester_name + ".buffer").c_str() );
+            remove( (tester_name + "/" +tester_name + ".output").c_str() );
 
-                //If for some reason this file already exists, we need to remove it to reset the contents.
-                remove( (tester_name + ".buffer").c_str() );
-                remove( (tester_name + ".output").c_str() );
+            std::ofstream tester_buffer(tester_name + "/" + tester_name + ".buffer");
+            
+            //Copy the inputs to get to the input to test
+            create_input_buffer(tester_name, tester_buffer, input_file, test_input);
+            
+            Tester_Info tester_settings(num_lines_down, num_ans_lines, test_num, program_name ,tester_name, test_input, ans);
+            
+            run_test(tester_settings);    
 
-                std::ofstream tester_buffer(tester_name + "/" + tester_name + ".buffer");
-                
-                //Copy the inputs to get to the input to test
-                create_input_buffer(input, tester_buffer, input_file);
-                
-                
-
-                Tester_Info tester_settings(num_lines_down, num_ans_lines, program_name ,tester_name, input, ans);
-                
-                run_test(tester_settings);    
             }
     }
+
+    //remove these intermediate files automatically.
+    remove( (tester_name + "/" +tester_name + ".buffer").c_str() );
+    remove( (tester_name + "/" +tester_name + ".output").c_str() );
+
+    return;
 }
 
 
