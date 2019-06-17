@@ -1,11 +1,11 @@
 #include "../include/add_new_tester.h"
 #include "../include/Program_Settings.h"
+#include "../include/get_tester_input.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
 #include <iostream>
 #include <limits>
-
 
 Program_Settings get_program_info()
 {
@@ -27,8 +27,10 @@ Program_Settings get_program_info()
     std::cout << "Please enter a desired output name: ";
     getline(std::cin, output_name);
 
-    std::cout << "Please specify the input sequence to get to where in the program YOU WANT to test: ";
-    getline(std::cin, input_sequence);
+    std::cout << "Please specify the input sequence to get to where in the program YOU WANT to test (One input per line, enter nothing to end): ";
+
+    input_sequence = get_tester_input();
+
     std::cout << "Please specify exactly how many lines down on the output of your program the result will lie: ";
     
     std::cin >> num_lines_down;
