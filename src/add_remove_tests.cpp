@@ -2,9 +2,11 @@
 
 #include "../include/add_remove_tests.h"
 #include "../include/Record.h"
+#include "../include/get_tester_input.h"
 #include <iostream>
 #include <limits>
 #include <experimental/filesystem>
+
 
 std::string get_valid_file()
 {
@@ -23,7 +25,9 @@ void edit_record_file(std::string file)
     std::string temp = "x";
 
     std::cout << "Please enter the next input to test: ";
-    getline(std::cin, new_input);
+    new_input = get_tester_input();
+
+    new_input += "\n";
 
     std::cout << "Please enter the correct output for that input(enter nothing to stop): ";
 
