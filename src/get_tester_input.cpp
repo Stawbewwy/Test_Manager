@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "../include/get_input.h"
+#include "../include/get_tester_input.h"
 
 std::string get_tester_input()
 {
