@@ -1,5 +1,5 @@
 #include "../include/add_new_tester.h"
-#include "../include/Program_Settings.h"
+#include "../include/Tester_Settings.h"
 #include "../include/get_tester_input.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -7,7 +7,7 @@
 #include <iostream>
 #include <limits>
 
-Program_Settings get_program_info()
+Tester_Settings get_program_info()
 {
     std::string program_name;
     std::string output_directory;
@@ -42,17 +42,15 @@ Program_Settings get_program_info()
 
     
 
-    return ( Program_Settings(program_name, output_directory, output_name ,input_sequence, num_lines_down) );
+    return ( Tester_Settings(program_name, output_directory, output_name ,input_sequence, num_lines_down) );
 }
 
 void add_new_tester()
 {
 
-  Program_Settings program_info = get_program_info();
+  Tester_Settings program_info = get_program_info();
 
+  //write the settings into a file
   program_info.print_settings();
 
-      
-
-  /**From here, we need to write this into our records*/   
 }

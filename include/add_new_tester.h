@@ -1,11 +1,18 @@
 #ifndef _ADD_NEW_PROGRAM_H
 #define _ADD_NEW_PROGRAM_H
-#include "Program_Settings.h"
+#include "Tester_Settings.h"
 #include <stdlib.h>
 
-Program_Settings get_program_info();
+/**
+*   Function that requests the information of a new tester from user, and creates a Tester_Settings objects containing all of it.
+*
+*/
+Tester_Settings get_program_info();
 
-//body of function
+/**
+*   Function that adds a new tester
+*
+*/
 void add_new_tester();
 
 
