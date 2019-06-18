@@ -25,7 +25,6 @@ std::string parse_input(std::ifstream &tests_file)
         test += temp + "\n";
     }
 
-
     if(temp == "")
     {
         return test;
@@ -33,6 +32,33 @@ std::string parse_input(std::ifstream &tests_file)
 
     return test.erase( ( (int)test.length() ) - 1 - 4, 5);
 
+}
+
+std::string parse_output(std::ifstream &tests_file, int &num_ans_lines)
+{
+    std::string ans, temp;
+
+    while(temp != "~x~")
+    {
+        getline(tests_file, temp);
+        num_ans_lines++;
+        ans += (temp + "\n");
+    }
+
+    //erase the appended "\n~x~";    
+    ans.erase(ans.length() - 1 - 4,5);
+    num_ans_lines--;
+
+    return ans;
+}
+
+void remove_intermediates(std::string file_name)
+{
+    
+    remove( (file_name + ".buffer").c_str() );
+    remove((file_name + ".output").c_str() );
+
+    return ;
 }
 
 int file_get_num_lines(std::string file_name)
@@ -161,16 +187,13 @@ void run_test(Tester_Info tester_settings)
 
         std::cout << "\nInput: \n" << tester_settings.get_input() << "\n\nExpected Answer: \n" << tester_settings.get_ans() << std::endl;
         std::cout << "\nOutput: \n" << result << std::endl;
-
-       
-        
     }
 
 
 }
 
 /** @tester_name; the name of the tester program. */
-void create_source_code(std::string tester_name)
+void run_tests(std::string tester_name)
 {
     int num_lines_down;
     int num_ans_lines;
@@ -186,7 +209,6 @@ void create_source_code(std::string tester_name)
     meta_file >> num_lines_down;
 
 
-
     std::ifstream input_file( tester_name + "/" + tester_name + ".input" );
     std::ifstream tests_file( tester_name + "/" + tester_name + ".tests");
 
@@ -194,11 +216,9 @@ void create_source_code(std::string tester_name)
 
     while ( tests_file.good() )
     {
-        test_num++;
-
         std::string temp;
 
-        ans = "";
+       // ans = "";
         num_ans_lines = 0;
 
         //pull out the input we are going to be testing.
@@ -207,25 +227,19 @@ void create_source_code(std::string tester_name)
 
         //last read will pull a blank line.
         if( tests_file.good() ){
-            //build output string for current test.
-            while(temp != "~x~")
-            {
-                getline(tests_file, temp);
-                num_ans_lines++;
-                ans += (temp + "\n");
-            }
 
-            //erase the appended "\n~x~";    
-            ans.erase(ans.length() - 1 - 4,5);
-            num_ans_lines--;
+            test_num++;
+
+            //get correct output to the current test, update 
+            ans = parse_output(tests_file, num_ans_lines);
 
 
             //Need to reset offset to beginning of file each iteration.        
             input_file.seekg(0);
 
             //If file already exists, we need to remove it to reset the contents.
-            remove( (tester_name + "/" +tester_name + ".buffer").c_str() );
-            remove( (tester_name + "/" +tester_name + ".output").c_str() );
+
+            remove_intermediates(tester_name + "/" + tester_name);
 
             std::ofstream tester_buffer(tester_name + "/" + tester_name + ".buffer");
             
@@ -240,8 +254,7 @@ void create_source_code(std::string tester_name)
     }
 
     //remove these intermediate files automatically.
-    remove( (tester_name + "/" +tester_name + ".buffer").c_str() );
-    remove( (tester_name + "/" +tester_name + ".output").c_str() );
+    remove_intermediates(tester_name + "/" + tester_name);
 
     return;
 }
@@ -255,7 +268,7 @@ void run_tester()
     std::cout << "Enter the name of the tester you want to generate: ";
     getline(std::cin, tester_name);
 
-    create_source_code(tester_name);
+    run_tests(tester_name);
 
     return ;
 }
