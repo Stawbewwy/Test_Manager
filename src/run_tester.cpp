@@ -14,7 +14,6 @@
 std::string parse_input(std::ifstream &tests_file)
 {
     std::string temp = "x";
-
     std::string test;
 
 
@@ -50,6 +49,30 @@ std::string parse_output(std::ifstream &tests_file, int &num_ans_lines)
     num_ans_lines--;
 
     return ans;
+}
+
+std::string get_result(std::ifstream &output_file, Tester_Info &tester_settings)
+{
+    //string buffer
+    std::string result, temp;
+
+    //Push file offset to the output of the test
+    for(int n = 0; n < tester_settings.get_num_lines_down(); n++)
+    {
+        getline(output_file, temp);
+    }
+
+    //extract the output
+    for(int n = 0; n < tester_settings.get_num_ans_lines(); n++)
+    {   
+        getline(output_file, temp);
+        result += temp + "\n";
+    }
+
+    //remove the "\n" @ end
+    result.erase( result.length()-1, 1);
+
+    return result;
 }
 
 void remove_intermediates(std::string file_name)
@@ -153,25 +176,8 @@ void run_test(Tester_Info tester_settings)
         waitpid(curr_test, NULL, 0);
         std::ifstream output_file( tester_settings.get_tester_name() + "/" + tester_settings.get_tester_name() + ".output" );
         std::string result;
-        
-        //string buffer
-        std::string temp;
 
-        //Push file offset to the output of the test
-        for(int n = 0; n < tester_settings.get_num_lines_down(); n++)
-        {
-            getline(output_file, temp);
-        }
-
-        //extract the output
-        for(int n = 0; n < tester_settings.get_num_ans_lines(); n++)
-        {   
-            getline(output_file, temp);
-            result += temp + "\n";
-        }
-
-        //remove the "\n" @ end
-        result.erase( result.length()-1, 1);
+        result = get_result(output_file, tester_settings);
         
         std::cout << "\n==== Test #" << tester_settings.get_test_num() << " ====";
 
