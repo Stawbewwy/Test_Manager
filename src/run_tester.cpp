@@ -9,14 +9,10 @@
 #include "Tester_Info.h"
 #include "test_utilities.h"
 
-/**
-    @input: string to be tokenized to proper std input. Breaks every , into a blank.
-*/
 std::string parse_input(std::ifstream &tests_file)
 {
     std::string temp = "x";
     std::string test;
-
 
     while(temp != "~z~" && temp != "")
     {
@@ -30,8 +26,7 @@ std::string parse_input(std::ifstream &tests_file)
         return test;
     }
 
-    return test.erase( ( (int)test.length() ) - 1 - 4, 5);
-
+    return test.erase( test.length() - 1 - 4, 5);
 }
 
 std::string parse_output(std::ifstream &tests_file, int &num_ans_lines)
@@ -78,7 +73,6 @@ std::string get_result(std::ifstream &output_file, Tester_Info &tester_settings)
 
 void remove_intermediates(std::string file_name)
 {
-    
     remove( (file_name + ".buffer").c_str() );
     remove((file_name + ".output").c_str() );
 
@@ -118,9 +112,6 @@ void create_input_buffer(std::string tester_name, std::ofstream &destination, st
     return;
 }
 
-//@tester_name: the name of desired tester.
-//@program_name: the name of the program being tested.
-//the actual execution of a tester.
 void exec_test(std::string tester_name, std::string program_name)
 {
     int input_fd = open( ( tester_name+ "/" + tester_name + ".buffer").c_str(), O_RDONLY);
@@ -146,10 +137,10 @@ void exec_test(std::string tester_name, std::string program_name)
         std::cerr << "Error executing desired program!" <<std::endl;
         exit(-1);
     }
+
+    return;
 }
 
-/** Function that will run the test and display results.*/
-/** @tester_name; the name of the tester program. */
 void run_test(Tester_Info tester_settings)
 {
     //We will be doing the fork + exec combo to test each input.
@@ -186,10 +177,9 @@ void run_test(Tester_Info tester_settings)
         std::cout << "\nOutput: \n" << result << std::endl;
     }
 
-
+    return;
 }
 
-/** @tester_name; the name of the tester program. */
 void run_tests(std::string tester_name)
 {
     int num_lines_down;
@@ -214,8 +204,6 @@ void run_tests(std::string tester_name)
     while ( tests_file.good() )
     {
         std::string temp;
-
-       // ans = "";
         num_ans_lines = 0;
 
         //pull out the input we are going to be testing.
