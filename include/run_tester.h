@@ -45,10 +45,6 @@ int file_get_num_lines(std::string file_name);
 
 void create_input_buffer(std::string tester_name, std::ofstream &destination, std::ifstream &source, std::string test_input);
 
-void print_pass();
-
-void print_failed();
-
 /**
 *   Function that actually executes the program we are testing and records the output.
 *
