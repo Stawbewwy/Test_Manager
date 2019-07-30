@@ -1,6 +1,7 @@
 #include "../include/helper_functions.h"
 #include <experimental/filesystem>
 #include <iostream>
+#include <limits>
 
 void get_existing_testers()
 {
@@ -29,6 +30,8 @@ std::string select_existing_tester()
     while(!valid){
         std::cout << "Select a tester (include the .TM extension) or enter 0 to cancel: ";
 
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         getline(std::cin, temp);
 
         if (temp == ""){
@@ -49,6 +52,9 @@ void set_working_dir()
     std::string temp;
 
     std::cout << "Enter a new directory to change to: ";
+
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     getline(std::cin, temp);
 
     std::experimental::filesystem::current_path(temp);

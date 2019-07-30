@@ -47,6 +47,11 @@ void modify_existing_tester()
                 //returns to main menu
                 return;
             }
+
+            default:
+            {
+                break;
+            }
         }
 
         
