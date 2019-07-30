@@ -3,7 +3,7 @@
 #include <iostream>
 #include "../include/main_menu.h"
 #include "../include/add_new_tester.h"
-#include "../include/add_remove_tests.h"
+#include "../include/modify_existing_tester.h"
 #include "../include/run_tester.h"
 #include <experimental/filesystem>
 
@@ -16,7 +16,7 @@ void main_menu()
         std::cout << "\nCurrent Directory: " << std::experimental::filesystem::current_path() << std::endl << std::endl;
 
         std::cout << "1 -- Create New Tester" << std::endl;
-        std::cout << "2 -- Add/Remove Tests to Tester" << std::endl;
+        std::cout << "2 -- Modify Existing Tester" << std::endl;
         std::cout << "3 -- Delete Existing Tester" << std::endl;
         std::cout << "4 -- Run Tester" << std::endl;
         std::cout << "5 -- Exit" << std::endl;
