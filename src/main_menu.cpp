@@ -6,6 +6,7 @@
 #include "../include/modify_existing_tester.h"
 #include "../include/run_tester.h"
 #include <experimental/filesystem>
+#include "../include/modify_existing_tester.h"
 
 void main_menu()
 {
@@ -39,7 +40,7 @@ void main_menu()
 
             case 2:
             {
-                add_remove_tests();
+                modify_existing_tester();
                 break;
             }
 

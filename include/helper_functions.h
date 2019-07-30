@@ -1,5 +1,7 @@
-#ifndef _EDIT_PROGRAM_H
+#ifndef _HELPER_FUNCTIONS_H
 #define _HELPER_FUNCTIONS_H
+
+#include <iostream>
 
 /**
 *   Function that lists every found tester in the current working directory
@@ -17,6 +19,6 @@ std::string select_existing_tester();
 *   Function that sets the working directory to what the user specifies.
 *   Upon entering an invalid directory, the directory will remain to what it was before the change.
 */
-bool::set_working_dir();
+void set_working_dir();
 
 #endif
