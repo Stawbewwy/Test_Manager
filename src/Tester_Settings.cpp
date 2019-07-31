@@ -15,10 +15,10 @@ void Tester_Settings::print_settings()
 
 
     //Note that we append the / ourselves. The user must not input it.
-    std::string record_location = output_directory + "/" + output_name + "/" + output_name;
+    std::string record_location = output_directory + "/" + output_name + ".TM" + "/" + output_name;
 
-     std::experimental::filesystem::create_directory( output_directory + "/" + output_name );
-     std::experimental::filesystem::permissions(output_directory + "/" + output_name, std::experimental::filesystem::perms::owner_all);
+     std::experimental::filesystem::create_directory( output_directory + "/" + output_name + ".TM" );
+     std::experimental::filesystem::permissions(output_directory + "/" + output_name + ".TM", std::experimental::filesystem::perms::owner_all);
 
 
     std::string input_file = record_location + ".input";
