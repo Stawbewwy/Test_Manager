@@ -11,8 +11,8 @@ void get_existing_testers()
         //entry.length() -4 gets us to where we would expect the .TM extension part of a tester name, and the 3 characters checks that part out
 
         std::string entry_str = entry.path();
-
-        if( entry_str.length() >= 3 && ( entry_str.substr( entry_str.length() - 4, 3 ) == ".TM") ){
+        
+        if( entry_str.length() >= 3 && ( entry_str.substr( entry_str.length() - 3, 3 ) == ".TM") ){
             std::cout << entry.path() << std::endl;
         }
         
@@ -26,9 +26,11 @@ std::string select_existing_tester()
     bool valid = false;
     
     std::string temp;
+    
+    get_existing_testers();
 
     while(!valid){
-        std::cout << "Select a tester (include the .TM extension) or enter 0 to cancel: ";
+        std::cout << "Select a tester (include the .TM extension, only the tester name, not entire path) or enter 0 to cancel: ";
 
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
