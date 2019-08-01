@@ -1,14 +1,10 @@
-#include "../include/create_new_tester_mode.h"
-#include "../include/Tester_Settings.h"
-#include "../include/get_tester_input.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
 #include <iostream>
 #include <limits>
-
-#include <iostream>
-#include "../include/get_tester_input.h"
+#include "../include/create_new_tester_mode.h"
+#include "../include/Tester_Settings.h"
 
 std::string get_tester_input()
 {
