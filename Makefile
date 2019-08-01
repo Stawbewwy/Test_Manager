@@ -20,7 +20,6 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/run_tester.o \
 		$(OBJ_DIR)/Record.o \
 		$(OBJ_DIR)/Tester_Info.o \
-		$(OBJ_DIR)/test_utilities.o \
 		$(OBJ_DIR)/helper_functions.o \
 		$(OBJ_DIR)/add_or_remove_menu.o \
 		$(OBJ_DIR)/add_tests_mode.o \

@@ -7,7 +7,16 @@
 #include <limits>
 #include <algorithm>
 #include "Tester_Info.h"
-#include "test_utilities.h"
+
+void print_pass()
+{
+    std::cout << "\033[1;32m\t\tPassed!\033[0m\n";
+}
+
+void print_failed()
+{
+    std::cout << "\033[1;31m\t\tFailed! \033[0m \n";
+}
 
 std::string parse_input(std::ifstream &tests_file)
 {
