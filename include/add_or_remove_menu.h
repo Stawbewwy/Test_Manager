@@ -2,6 +2,6 @@
 #define _MODIFY_TESTER_H
 
 //main state screen to modify a tester.
-void modify_tester();
+void add_or_remove_menu();
 
 #endif

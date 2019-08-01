@@ -21,32 +21,50 @@ void get_existing_testers()
     std::cout << std::endl;
 }
 
+std::string extract_tester_name(std::string entry){
+    //we assume already that the .TM exists
+
+    int curr_pos = entry.length()-4;
+    std::string name;
+
+    while(entry[curr_pos] != '/')
+    {
+        name.insert(0, 1 , entry[curr_pos]);
+        curr_pos--;
+    }
+
+    return name;
+}
+
 std::string select_existing_tester()
 {
     bool valid = false;
     
-    std::string temp;
+    std::string user_entry;
     
     get_existing_testers();
 
-    while(!valid){
-        std::cout << "Select a tester (include the .TM extension, only the tester name, not entire path) or enter 0 to cancel: ";
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cerr << "Select a tester (include the .TM extension): \n" << std::endl;
+    getline(std::cin, user_entry);
 
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        getline(std::cin, temp);
-
-        if (temp == ""){
-            return "";
-        }
-
-        for (const auto & entry : std::experimental::filesystem::directory_iterator( std::experimental::filesystem::current_path() ) ) {        
-            if (entry == temp){
-                return temp;
+    for (const auto & entry : std::experimental::filesystem::directory_iterator( std::experimental::filesystem::current_path() ) ) {
+        
+        std::string entry_str = entry.path();
+        
+        //only consider entires that have a possibility of being valid
+        if( entry_str.length() >= 3 && ( entry_str.substr( entry_str.length() - 3, 3 ) == ".TM") ){
+            if ( user_entry == extract_tester_name(entry_str) ){
+                return user_entry;
             }
-        }
-    
+        }   
+        
     }
+
+    std::cout << "Sorry, couldn't find that tester.\n";
+    
+    return "";
 }
 
 void set_working_dir()

@@ -13,6 +13,12 @@ void get_existing_testers();
 *   Returns the empty string if user enters nothing or a string of the program name they chose
 */
 
+/**
+*   Function that expects a directory entry that ends with .TM. Reads backwards from the . until it encounters a /, while building the file name and returns it.
+*   @entry: the directory entry we are trying to extract the file name of.
+*/
+std::string extract_tester_name(std::string);
+
 std::string select_existing_tester();
 
 /**
