@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "../include/main_menu.h"
-#include "../include/add_new_tester.h"
+#include "../include/create_new_tester_mode.h"
 #include "../include/modify_tester_menu.h"
 #include "../include/run_tester.h"
 #include <experimental/filesystem>

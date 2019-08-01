@@ -14,7 +14,7 @@ INCLUDE += -I $(INC_DIR)
 
 OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/main_menu.o \
-		$(OBJ_DIR)/add_new_tester.o \
+		$(OBJ_DIR)/create_new_tester_mode.o \
 		$(OBJ_DIR)/edit_program.o \
 		$(OBJ_DIR)/Tester_Settings.o \
 		$(OBJ_DIR)/delete_program.o \
@@ -26,6 +26,8 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/get_tester_input.o \
 		$(OBJ_DIR)/helper_functions.o \
 		$(OBJ_DIR)/add_or_remove_menu.o \
+		$(OBJ_DIR)/add_tests_mode.o \
+		$(OBJ_DIR)/remove_tests_mode.o \
 		
 
 .PHONY: all clean $(PROG_NAME) compile

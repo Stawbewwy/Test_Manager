@@ -1,4 +1,6 @@
 #include "../include/add_or_remove_menu.h"
+#include "../include/add_tests_mode.h"
+#include "../include/remove_tests_mode.h"
 
 void add_or_remove_menu(std::string tester_name)
 {
@@ -15,5 +17,29 @@ void add_or_remove_menu(std::string tester_name)
     
     int user_choice;
     std::cin >> user_choice;
-    return;
+
+    switch(user_choice)
+    {
+        case 1:
+        {
+            add_tests_mode();
+            break;
+        }
+
+        case 2:
+        {
+            remove_tests_mode();
+            break;
+        }
+        
+        case 3:
+        {
+            return;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
 }
