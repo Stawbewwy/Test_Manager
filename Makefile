@@ -17,7 +17,7 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/create_new_tester_mode.o \
 		$(OBJ_DIR)/Tester_Settings.o \
 		$(OBJ_DIR)/modify_tester_menu.o \
-		$(OBJ_DIR)/run_tester.o \
+		$(OBJ_DIR)/run_tester_mode.o \
 		$(OBJ_DIR)/Record.o \
 		$(OBJ_DIR)/Tester_Info.o \
 		$(OBJ_DIR)/helper_functions.o \

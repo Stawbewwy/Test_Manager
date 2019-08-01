@@ -4,7 +4,7 @@
 #include "../include/main_menu.h"
 #include "../include/create_new_tester_mode.h"
 #include "../include/modify_tester_menu.h"
-#include "../include/run_tester.h"
+#include "../include/run_tester_mode.h"
 #include <experimental/filesystem>
 
 void main_menu()
