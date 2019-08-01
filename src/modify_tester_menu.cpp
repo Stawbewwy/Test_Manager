@@ -2,7 +2,7 @@
 #include <iostream>
 #include "../include/modify_tester_menu.h"
 #include <experimental/filesystem>
-#include "../include/modify_tester.h"
+#include "../include/add_or_remove_menu.h"
 #include "../include/helper_functions.h"
 
 void modify_existing_tester()
