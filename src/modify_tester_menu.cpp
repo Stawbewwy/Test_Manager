@@ -30,7 +30,7 @@ void modify_existing_tester()
 
                 if( tester != "")
                 {
-                    add_or_remove_menu();
+                    add_or_remove_menu(tester);
                 }
 
                 break;
