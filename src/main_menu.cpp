@@ -3,10 +3,9 @@
 #include <iostream>
 #include "../include/main_menu.h"
 #include "../include/add_new_tester.h"
-#include "../include/modify_existing_tester.h"
+#include "../include/modify_tester_menu.h"
 #include "../include/run_tester.h"
 #include <experimental/filesystem>
-#include "../include/modify_existing_tester.h"
 
 void main_menu()
 {

@@ -18,7 +18,7 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/edit_program.o \
 		$(OBJ_DIR)/Tester_Settings.o \
 		$(OBJ_DIR)/delete_program.o \
-		$(OBJ_DIR)/modify_existing_tester.o \
+		$(OBJ_DIR)/modify_tester_menu.o \
 		$(OBJ_DIR)/run_tester.o \
 		$(OBJ_DIR)/Record.o \
 		$(OBJ_DIR)/Tester_Info.o \
