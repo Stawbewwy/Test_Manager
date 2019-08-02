@@ -4,6 +4,11 @@
 #include <iostream>
 
 /**
+* Function that will keep allowing user to enter lines of input to be used as input for a single test.
+*/
+std::string get_tester_input();
+
+/**
 *   Function that lists every found tester in the current working directory
 */
 void get_existing_testers();

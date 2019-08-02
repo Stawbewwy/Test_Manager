@@ -6,21 +6,7 @@
 #include "../include/create_new_tester_mode.h"
 #include "../include/Tester_Settings.h"
 
-std::string get_tester_input()
-{
-  std::string temp = "x";
-  
-  std::string input;
 
-  while(temp != "")
-  {
-    getline(std::cin, temp);
-    input += temp + "\n";
-  }
-
-  //-2 to get index position, and remove the final new line.
-  return input.substr(0, input.length()-2);
-}
 
 Tester_Settings get_program_info()
 {

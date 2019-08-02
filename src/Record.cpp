@@ -9,7 +9,7 @@ void Record::write_record(std::string filename)
 {
     std::ofstream file;
 
-    file.open( (filename + "/" + filename + ".tests"), std::ios::out | std::ios::app );
+    file.open( (filename + ".TM" + "/" + filename  + ".tests"), std::ios::out | std::ios::app );
     file << input << "~z~" << output <<"~x~" << std::endl; 
 
     file.close();
