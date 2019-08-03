@@ -109,7 +109,7 @@ void create_input_buffer(std::string tester_name, std::ofstream &destination, st
     std::string temp;
 
     //lines -1 to get rid of a null line
-    for(int n = 0 ; n < file_get_num_lines(tester_name + "/" + tester_name + ".input") - 1 ; n++ )
+    for(int n = 0 ; n < file_get_num_lines(tester_name + ".TM" + "/" + tester_name + ".input") - 1 ; n++ )
     {
         getline(source, temp);
         destination << temp << std::endl;
@@ -123,8 +123,8 @@ void create_input_buffer(std::string tester_name, std::ofstream &destination, st
 
 void exec_test(std::string tester_name, std::string program_name)
 {
-    int input_fd = open( ( tester_name+ "/" + tester_name + ".buffer").c_str(), O_RDONLY);
-    int output_fd = open( (tester_name+ "/" + tester_name + ".output").c_str(), O_RDWR | O_CREAT, S_IRWXU );
+    int input_fd = open( ( tester_name + ".TM" + "/" + tester_name + ".buffer").c_str(), O_RDONLY);
+    int output_fd = open( (tester_name + ".TM" + "/" + tester_name + ".output").c_str(), O_RDWR | O_CREAT, S_IRWXU );
 
     //change stdin to the correct input
     dup2(input_fd,STDIN_FILENO);
@@ -165,7 +165,7 @@ void run_test(Tester_Info tester_settings)
     else
     {
         waitpid(curr_test, NULL, 0);
-        std::ifstream output_file( tester_settings.get_tester_name() + "/" + tester_settings.get_tester_name() + ".output" );
+        std::ifstream output_file( tester_settings.get_tester_name() + ".TM" + "/" + tester_settings.get_tester_name() + ".output" );
         std::string result;
 
         result = get_result(output_file, tester_settings);
@@ -196,7 +196,7 @@ void run_tests(std::string tester_name)
     std::string test_input = "x", ans;
     
     /** READ THE META DETA FILE*/
-    std::ifstream meta_file(tester_name + "/" + tester_name + ".meta");    
+    std::ifstream meta_file(tester_name + ".TM" + "/" + tester_name + ".meta");    
     std::string program_name;
 
     // Pull the file name of the desired tester.
@@ -205,8 +205,8 @@ void run_tests(std::string tester_name)
     meta_file >> num_lines_down;
 
 
-    std::ifstream input_file( tester_name + "/" + tester_name + ".input" );
-    std::ifstream tests_file( tester_name + "/" + tester_name + ".tests");
+    std::ifstream input_file( tester_name + ".TM" + "/" + tester_name + ".input" );
+    std::ifstream tests_file( tester_name + ".TM" + "/" + tester_name + ".tests");
 
     int test_num = 0;
 
@@ -233,9 +233,9 @@ void run_tests(std::string tester_name)
 
             //If file already exists, we need to remove it to reset the contents.
 
-            remove_intermediates(tester_name + "/" + tester_name);
+            remove_intermediates(tester_name + ".TM" + "/" + tester_name);
 
-            std::ofstream tester_buffer(tester_name + "/" + tester_name + ".buffer");
+            std::ofstream tester_buffer(tester_name + ".TM" + "/" + tester_name + ".buffer");
             
             //Copy the inputs to get to the input to test
             create_input_buffer(tester_name, tester_buffer, input_file, test_input);
@@ -248,7 +248,7 @@ void run_tests(std::string tester_name)
     }
 
     //remove these intermediate files automatically.
-    remove_intermediates(tester_name + "/" + tester_name);
+    remove_intermediates(tester_name + ".TM" + "/" + tester_name);
 
     return;
 }

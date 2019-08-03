@@ -5,18 +5,24 @@
 
 std::string get_tester_input()
 {
-  std::string temp = "x";
-  
-  std::string input;
+    std::string temp;
 
-  while(temp != "")
-  {
+    std::string input;
+
+    //Clear out what's in the buffer
     getline(std::cin, temp);
-    input += temp + "\n";
-  }
 
-  //-2 to get index position, and remove the final new line.
-  return input.substr(0, input.length()-2);
+    
+    temp = "x";
+    while(temp != "")
+    {
+        getline(std::cin, temp);
+        input += temp + "\n";
+        //std::cerr<< "temp: " << temp << "\t length: " << temp.length();
+    }
+
+    //-2 to get index position, and remove the final new line.
+    return input.substr(0, input.length()-2);
 }
 
 void get_existing_testers()

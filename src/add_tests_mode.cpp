@@ -12,11 +12,8 @@ void add_tests_mode(std::string tester_name)
     new_input = get_tester_input();
 
     new_input += "\n";
-
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     
-    std::cout << "Please enter the correct output for that input(enter nothing to stop): ";
+    std::cout << "Please enter the correct output for that input(enter nothing to stop): \n";
 
     //build output sequence
     while(temp != "")
@@ -24,7 +21,7 @@ void add_tests_mode(std::string tester_name)
         getline(std::cin, temp);
         new_output += ("\n" + temp);
     }
-    
+
     Record new_record(new_input, new_output);
 
     new_record.write_record(tester_name);
