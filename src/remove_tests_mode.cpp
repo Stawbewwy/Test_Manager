@@ -70,7 +70,21 @@ void print_tests(std::vector <std::vector<std::string> > tests_vector )
 
 void write_test_changes(std::string tester_name, std::vector <std::vector<std::string> > tests_vector)
 {
+    std::ofstream tests_file;
+    tests_file.open(tester_name + ".TM" + "/" + tester_name + ".tests", std::ofstream::out | std::ofstream::trunc);
+    
+    for(int n = 0; n < tests_vector.size(); n++)
+    {
+        for(int m = 0; m < tests_vector[n].size(); m++)
+        {
+            tests_file << tests_vector[n][m] << std::endl;
+        }
+    }
 
+    //remove extra line at end.
+
+    tests_file << "\b";
+    tests_file.close();
 }
 
 void remove_tests_mode(std::string tester_name)
@@ -83,7 +97,8 @@ void remove_tests_mode(std::string tester_name)
 
     std::cout << "Select a test to remove, or nothing to cancel: ";
     getline(std::cin, user_input);
-
+    getline(std::cin, user_input);
+    std::cerr << "pepega";
     int users_choice = stoi(user_input);
 
     tests_vector.erase( tests_vector.begin() + users_choice);
