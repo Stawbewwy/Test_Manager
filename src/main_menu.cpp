@@ -23,8 +23,11 @@ void main_menu()
 
         std::cout << std::endl <<"Please enter an option: ";
 
-        int user_choice;
-        std::cin >> user_choice;
+        
+        std::string user_input;
+
+        getline(std::cin, user_input);
+        int user_choice = stoi(user_input);
 
         std::cout << std::endl;
 

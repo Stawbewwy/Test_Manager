@@ -14,10 +14,10 @@ Tester_Settings get_program_info()
     std::string output_directory;
     std::string input_sequence;
     std::string output_name;
-    int num_lines_down;
+    //buffer to get num_lines_down from user
+    std::string user_input;
 
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    int num_lines_down;
 
     std::cout << "Please enter the name of the program you wish to test: ";
     getline(std::cin, program_name);
@@ -34,10 +34,12 @@ Tester_Settings get_program_info()
 
     std::cout << "Please specify exactly how many lines down on the output of your program the result will lie: ";
     
-    std::cin >> num_lines_down;
+    getline(std::cin, user_input);
+    
+    num_lines_down = stoi(user_input);
 
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cout << std::endl;
+  
     
     std::cout << "Attempting to find target program..." << std::endl;
 

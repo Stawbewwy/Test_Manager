@@ -6,12 +6,7 @@
 std::string get_tester_input()
 {
     std::string temp;
-
     std::string input;
-
-    //Clear out what's in the buffer
-    getline(std::cin, temp);
-
     
     temp = "x";
     while(temp != "")
@@ -66,8 +61,6 @@ std::string select_existing_tester()
     
     get_existing_testers();
 
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cerr << "Select a tester (include the .TM extension): \n" << std::endl;
     getline(std::cin, user_entry);
 
@@ -95,8 +88,6 @@ void set_working_dir()
 
     std::cout << "Enter a new directory to change to: ";
 
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     getline(std::cin, temp);
 
     std::experimental::filesystem::current_path(temp);

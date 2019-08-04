@@ -14,9 +14,12 @@ void add_or_remove_menu(std::string tester_name)
     std::cout << "3 -- Return to Previous Menu" << std::endl;
 
     std::cout << std::endl <<"Please enter an option: ";
-    
-    int user_choice;
-    std::cin >> user_choice;
+
+    std::string user_input;
+    getline(std::cin, user_input);
+    int user_choice = stoi(user_input);
+
+    std::cout << std::endl;
 
     switch(user_choice)
     {

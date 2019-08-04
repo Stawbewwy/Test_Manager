@@ -245,6 +245,7 @@ void run_tests(std::string tester_name)
             run_test(tester_settings);    
 
             }
+
     }
 
     //remove these intermediate files automatically.
@@ -258,7 +259,6 @@ void run_tester()
 {
     std::string tester_name;
 
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << "Enter the name of the tester you want to generate: ";
     getline(std::cin, tester_name);
 

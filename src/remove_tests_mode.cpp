@@ -83,7 +83,7 @@ void write_test_changes(std::string tester_name, std::vector <std::vector<std::s
 
     //remove extra line at end.
 
-    tests_file << "\b";
+    //tests_file << "\b";
     tests_file.close();
 }
 
@@ -97,8 +97,7 @@ void remove_tests_mode(std::string tester_name)
 
     std::cout << "Select a test to remove, or nothing to cancel: ";
     getline(std::cin, user_input);
-    getline(std::cin, user_input);
-    std::cerr << "pepega";
+
     int users_choice = stoi(user_input);
 
     tests_vector.erase( tests_vector.begin() + users_choice);
