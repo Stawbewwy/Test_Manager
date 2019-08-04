@@ -61,7 +61,7 @@ std::string select_existing_tester()
     
     get_existing_testers();
 
-    std::cerr << "Select a tester (include the .TM extension): \n" << std::endl;
+    std::cerr << "Select a tester (Do not include the .TM extension): \n" << std::endl;
     getline(std::cin, user_entry);
 
     for (const auto & entry : std::experimental::filesystem::directory_iterator( std::experimental::filesystem::current_path() ) ) {
