@@ -1,11 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <experimental/filesystem>
 #include "../include/main_menu.h"
 #include "../include/create_new_tester_mode.h"
 #include "../include/modify_tester_menu.h"
 #include "../include/run_tester_mode.h"
-#include <experimental/filesystem>
+#include "../include/delete_tester_mode.h"
+
 
 void main_menu()
 {
@@ -48,6 +50,7 @@ void main_menu()
 
             case 3:
             {
+                delete_tester_mode();
                 break;
             }
 

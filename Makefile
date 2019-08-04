@@ -24,6 +24,7 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/add_or_remove_menu.o \
 		$(OBJ_DIR)/add_tests_mode.o \
 		$(OBJ_DIR)/remove_tests_mode.o \
+		$(OBJ_DIR)/delete_tester_mode.o \
 		
 
 .PHONY: all clean $(PROG_NAME) compile
