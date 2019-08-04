@@ -25,6 +25,8 @@ OBJECT_LIST = $(OBJ_DIR)/main.o \
 		$(OBJ_DIR)/add_tests_mode.o \
 		$(OBJ_DIR)/remove_tests_mode.o \
 		$(OBJ_DIR)/delete_tester_mode.o \
+		$(OBJ_DIR)/change_input_mode.o \
+		$(OBJ_DIR)/change_meta_mode.o \
 		
 
 .PHONY: all clean $(PROG_NAME) compile
