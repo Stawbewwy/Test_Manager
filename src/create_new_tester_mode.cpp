@@ -33,9 +33,7 @@ Tester_Settings get_program_info()
     input_sequence = get_tester_input();
 
     std::cout << "Please specify exactly how many lines down on the output of your program the result will lie: ";
-    
     getline(std::cin, user_input);
-    
     num_lines_down = stoi(user_input);
 
     std::cout << std::endl;
