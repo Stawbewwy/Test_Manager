@@ -28,7 +28,7 @@ void add_or_remove_menu(std::string tester_name)
 
         case 2:
         {
-            remove_tests_mode();
+            remove_tests_mode(tester_name);
             break;
         }
         
