@@ -10,7 +10,7 @@
 5. Once you have actual tests, you can begin testing your program! Just select to run a tester, select which one, and bam! *Test_Manager* will begin running your program and testing the outputs of your desired input.
 
 ## Dependencies
-C++17
+C++17, needed for `experimental/filesystem` library.
 
 ## Warnings
 
