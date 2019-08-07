@@ -15,11 +15,12 @@ C++17, needed for `experimental/filesystem` library.
 ## Warnings
 
 ### Executing Your Program
+Be very careful with entering your program name in the metadata file. If you're going to run the program from the same directory, then you may need to add a './' in the front to denote that you are running a program. This may depend on what shell you are using. Just remember, that it needs to be saved to TM the same way you would run it from whichever directory you are working in.
 
-#### How the Tests Run
+### How the Tests Run
 There's a few things to consider when running this application. How stdout gets printed on the screen may not be how it gets written into a buffer/ file stream. That being said, you may need to adjust the how many lines down considering this. One way to figure it out quickly is to redirect all of your output to a separate file when executing the program you want to test, and then viewing the file after your program runs (you may need to feed it input through a file as well). This is basically the process *Test Manager* does. It simply saves the output of your program to a file, and reads the output after executing the program and feeding it the inputs. 
 
-#### How The Tests Get Gaved
+### How The Tests Get Gaved
 The way tests are stored in the `.tests` file is by printing each input line by line, and then having a '~z~' delimiter to indicate the end of the input you are testing, and then line by line has each correct line of output until a ~x~ is encountered. That being said, this program will not work if for whatever reason, the input you are testing is '~z~' or output is '~x~'.
 
 ### Functions Dependent on Working Directory
