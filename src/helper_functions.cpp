@@ -13,7 +13,6 @@ std::string get_tester_input()
     {
         getline(std::cin, temp);
         input += temp + "\n";
-        //std::cerr<< "temp: " << temp << "\t length: " << temp.length();
     }
 
     //-2 to get index position, and remove the final new line.
@@ -89,6 +88,11 @@ void set_working_dir()
     std::cout << "Enter a new directory to change to: ";
 
     getline(std::cin, temp);
+
+    if(temp == "")
+    {
+        temp = ".";
+    }
 
     std::experimental::filesystem::current_path(temp);
 

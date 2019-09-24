@@ -3,6 +3,11 @@
 
 #include <iostream>
 
+/**
+*   Function to add tests to an existing tester
+*
+*   @tester_name: the name of the tester we are adding a test to
+*/
 void add_tests_mode(std::string tester_name);
 
 #endif

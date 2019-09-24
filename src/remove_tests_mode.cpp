@@ -31,7 +31,6 @@ std::vector <std::vector <std::string> > vectorize_tests(std::vector <std::strin
         //every test inp/output ends with ~x~
         while(file_vector[line_num] != "~x~")
         {
-          //  std::cerr << "ConcernFrogeasd\n";
             curr_test_vector.push_back( file_vector[line_num++] );
         }
         curr_test_vector.push_back( file_vector[line_num++] );
@@ -81,9 +80,6 @@ void write_test_changes(std::string tester_name, std::vector <std::vector<std::s
         }
     }
 
-    //remove extra line at end.
-
-    //tests_file << "\b";
     tests_file.close();
 }
 

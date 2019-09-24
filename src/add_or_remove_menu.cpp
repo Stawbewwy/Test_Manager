@@ -10,7 +10,6 @@ void add_or_remove_menu(std::string tester_name)
     {
         std::cout << "\n\n==== Add or Remove Tests ====" << std::endl;
             
-    // std::cout << "\nCurrent Directory: " << std::experimental::filesystem::current_path() << std::endl << std::endl;
         std::cout << "\nSelected Tester: " << tester_name << std::endl << std::endl;
         std::cout << "1 -- Add Tests" << std::endl;
         std::cout << "2 -- Remove Tests" << std::endl;
