@@ -1,6 +1,6 @@
 # Test_Manager
 
-*Test Manager* is a bit of an involved tester. It's designed to be adaptable to various types of deterministic (i.e, exactly one output per input) programs. It's designed to allow you to test your programs most likely *without* needing to change the way your program prints it's output. This application attempts to figure out (with your help) where it can test the desired inputs, and where it can see the output of your program to see if it's what it should be. The way it works is this:
+*Test Manager* is a bit of an involved tester for Linux/Unix systems. It's designed to be adaptable to various types of deterministic (i.e, exactly one output per input) programs. It's designed to allow you to test your programs most likely *without* needing to change the way your program prints it's output. This application attempts to figure out (with your help) where it can test the desired inputs, and where it can see the output of your program to see if it's what it should be. The way it works is this:
 
 ## General Usage
 1. You find an application you want to test.
