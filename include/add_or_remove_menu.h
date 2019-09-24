@@ -2,7 +2,11 @@
 #define _MODIFY_TESTER_H
 #include <iostream>
 
-//main state screen to modify a tester.
+/*
+*   Main menu to modify an existing tester   
+*
+*   @tester_name: The name of the tester to modify
+*/
 void add_or_remove_menu(std::string tester_name);
 
 
